@@ -13,16 +13,23 @@ import { useNavigate } from 'react-router-dom';
 
 function Cart(props) {
 
+    const { token } = props
+
     const [cart, setCart] = useState([])
     const [error, setError] = useState("")
 
     const navigate = useNavigate()
 
     function getCart() {
+        if (!token) {
+            navigate("/login")
+            return
+        }
+
         fetch("http://localhost:8080/api/cart", {
             method: "GET",
             headers: {
-                "Authorization": localStorage.getItem("token")
+                "Authorization": "Bearer " + token
             },
         })
             .then(res => {
@@ -45,7 +52,7 @@ function Cart(props) {
         fetch("http://localhost:8080/api/cart/" + productId, {
             method: "DELETE",
             headers: {
-                "Authorization": localStorage.getItem("token")
+                "Authorization": "Bearer " + token
             },
         })
             .then(res => {

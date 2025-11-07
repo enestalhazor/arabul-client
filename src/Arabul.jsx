@@ -27,20 +27,20 @@ export const Arabul = (props) => {
       return
     }
     const token = jwtDecode(t)
-    if (t) {
-      const promise2 = fetch("http://localhost:8080/api/users/" + token.id, {
-        headers: { "Authorization": t }
-      })
+    const promise2 = fetch("http://localhost:8080/api/users/" + token.id, {
+      headers: { "Authorization": t }
+    })
 
-      promise2.then(function (val) {
-        val.json().then(function (a) {
-          console.log(a)
-          setProfile(a)
-          navigate("/home")
-        })
+    setToken(t.replace("Bearer ", ""))
+
+    promise2.then(function (val) {
+      val.json().then(function (a) {
+        console.log(a)
+        setProfile(a)
+        navigate("/home")
       })
-      navigate("/home")
-    }
+    })
+    navigate("/home")
   }, [])
 
   return (
@@ -49,8 +49,8 @@ export const Arabul = (props) => {
       <Route path='/login' element={<Login setToken={setToken} setProfile={setProfile} ></Login>} ></Route>
       <Route path='/register' element={<Register></Register>} ></Route>
       <Route path='/product' element={<Product></Product>} ></Route>
-      <Route path='/cart' element={<Cart></Cart>} ></Route>
-      <Route path='/profile' element={<Profile></Profile>} ></Route>
+      <Route path='/cart' element={<Cart token={token}></Cart>} ></Route>
+      <Route path='/profile' element={<Profile profile={profile} token={token} setProfile={setProfile}></Profile>} ></Route>
     </Routes>
   );
 };

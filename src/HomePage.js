@@ -35,11 +35,17 @@ function HomePage(props) {
     }
 
     function updateCart(productId) {
+
+        if (!token) {
+            navigate("/login")
+            return
+        }
+
         fetch("http://localhost:8080/api/cart", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": localStorage.getItem("token")
+                "Authorization": "Bearer " + token
             },
             body: JSON.stringify({ "product_id": productId })
         })
@@ -50,7 +56,7 @@ function HomePage(props) {
                     fetch("http://localhost:8080/api/cart", {
                         headers: {
                             "Content-Type": "application/json",
-                            "Authorization": localStorage.getItem("token")
+                            "Authorization": "Bearer " + token
                         },
                     })
                         .then(res => {
@@ -78,20 +84,22 @@ function HomePage(props) {
 
     useEffect(() => {
         fetchProducts()
-        fetch("http://localhost:8080/api/cart", {
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": localStorage.getItem("token")
-            },
-        })
-            .then(res => {
-                if (res.ok) {
-                    return res.json()
-                }
+        if (token) {
+            fetch("http://localhost:8080/api/cart", {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + token
+                },
             })
-            .then((data) => {
-                setCartCount(data.reduce((a, b) => a + b.count, 0))
-            })
+                .then(res => {
+                    if (res.ok) {
+                        return res.json()
+                    }
+                })
+                .then((data) => {
+                    setCartCount(data.reduce((a, b) => a + b.count, 0))
+                })
+        }
     }, [])
 
     return (
@@ -100,7 +108,7 @@ function HomePage(props) {
                 <div className="absolute top-4 right-4">
                     <div className="relative">
                         <img
-                            src={`http://localhost:8090/${profile.profile_picture}`}
+                            src={`http://localhost:8090/${profile.profile_picture ? profile.profile_picture : "default.jpg"}`}
                             alt="Profile"
                             className="border w-10 h-10 rounded-full cursor-pointer"
                             onClick={() => setOpen(!isOpen)}
@@ -110,7 +118,9 @@ function HomePage(props) {
                             <div className="absolute right-0 mt-2 bg-gray-900 rounded-lg shadow-xl py-2 w-36 border">
                                 <div className="px-4 py-2 text-white hover:bg-gray-700 cursor-pointer" onClick={() => navigate("/login")}>Login</div>
                                 <div className="px-4 py-2 text-white hover:bg-gray-700 cursor-pointer" onClick={() => navigate("/register")}>Register</div>
-                                <div className="px-4 py-2 text-white hover:bg-gray-700 cursor-pointer" onClick={() => navigate("/profile")}>Profile</div>
+                                {token && (
+                                    <div className="px-4 py-2 text-white hover:bg-gray-700 cursor-pointer" onClick={() => navigate("/profile")}>Profile</div>
+                                )}
                             </div>
                         )}
                     </div>
@@ -133,7 +143,12 @@ function HomePage(props) {
                         Search
                     </Button>
                     <div className="relative">
-                        <ShoppingCart onClick={() => { navigate("/cart") }} className="w-6 h-6 text-white cursor-pointer hover:text-gray-300 transition" />
+                        <ShoppingCart onClick={() => {
+                            if (!token) {
+                                navigate("/login")
+                                return
+                            } navigate("/cart")
+                        }} className="w-6 h-6 text-white cursor-pointer hover:text-gray-300 transition" />
                         <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold px-1.25 py-1.0 rounded-full">
                             {cartCount}
                         </span>
