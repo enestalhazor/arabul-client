@@ -11,12 +11,11 @@ import {
 import { SearchIcon, ShoppingCart } from 'lucide-react'
 import { useNavigate } from 'react-router-dom';
 import Product from './Product';
+import SearchedProducts from './SearchedProducts';
 
 function Products(props) {
-    const { products, updateCart } = props
-    const navigate = useNavigate()
-    const [selectedProduct, setSelectedProduct] = useState(null);
-    const [selectedProductPage, setSelectedProductPage] = useState(false);
+    const { setSearchedProductsPage, setSearchedProducts, searchedProducts, searchedProductsPage, setSelectedProductPage, setSelectedProduct, selectedProduct, selectedProductPage, products, updateCart } = props
+
 
     if (products.length < 1) {
         return (
@@ -24,11 +23,13 @@ function Products(props) {
         )
     }
 
-    if (selectedProduct && selectedProductPage == true) {
+    if (selectedProduct && selectedProductPage === true) {
         return <Product product={selectedProduct} updateCart={updateCart} setSelectedProductPage={setSelectedProductPage} />
     }
-    else
-    {
+    else if (searchedProducts && searchedProductsPage === true) {
+        return <SearchedProducts updateCart={updateCart} setSearchedProducts={setSearchedProducts} setSearchedProductsPage={setSearchedProductsPage} searchedProducts={searchedProducts}/>
+    }
+    else {
 
         return (
             <>
@@ -44,7 +45,7 @@ function Products(props) {
                             </CardHeader>
                             <CardContent className="px-3 pb-3 pt-1">
                                 <img
-                                    onClick={() => {setSelectedProduct(product); setSelectedProductPage(true);}}
+                                    onClick={() => { setSelectedProduct(product); setSelectedProductPage(true); }}
                                     src={`http://localhost:8090/${product.photo}`}
                                     alt={product.name}
                                     className="w-30 h-30 object-cover rounded-lg mb-2"

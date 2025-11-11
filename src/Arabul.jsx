@@ -5,7 +5,8 @@ import Product from './Product';
 import Register from './Register';
 import Profile from './Profile';
 import Login from './Login';
-import { Home } from 'lucide-react';
+import Checkout from './Checkout';
+import Orders from './Orders';
 import {
   BrowserRouter as Router,
   Routes,
@@ -50,6 +51,8 @@ export const Arabul = (props) => {
       <Route path='/register' element={<Register></Register>} ></Route>
       <Route path='/product' element={<Product></Product>} ></Route>
       <Route path='/cart' element={<Cart token={token}></Cart>} ></Route>
+      <Route path='/order' element={<Checkout token={token}></Checkout>} ></Route>
+      <Route path='/orders' element={<Orders token={token}></Orders>} ></Route>
       <Route path='/profile' element={<Profile profile={profile} token={token} setProfile={setProfile}></Profile>} ></Route>
     </Routes>
   );

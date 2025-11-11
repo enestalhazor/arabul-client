@@ -74,6 +74,9 @@ function Cart(props) {
         getCart()
     }, [])
 
+    const totalPrice = cart.reduce((sum, content) => sum + content.price * content.count, 0);
+    const isEmpty = cart.length === 0
+
     return (
         <>
             <div className="min-h-screen relative bg-black text-white flex flex-col items-center justify-center">
@@ -90,7 +93,6 @@ function Cart(props) {
                                 key={content.product_id}
                                 className="w-full bg-gray-900 text-white rounded-xl shadow-md border border-gray-800 hover:shadow-blue-500/20 transition-all duration-300 p-4 flex items-start gap-4"
                             >
-                                {/* Image */}
                                 <div className="flex-shrink-0">
                                     <img
                                         src={`http://localhost:8090/${content.photo}`}
@@ -102,7 +104,7 @@ function Cart(props) {
                                     <div className="text-left">
                                         <h3 className="text-lg font-semibold truncate">{content.name}</h3>
                                         <p className="text-gray-400 text-sm line-clamp-2">{content.description}</p>
-                                        <p className="text-blue-400 font-medium mt-1">£{content.price.toFixed(2)}</p>
+                                        <p className="text-blue-400 font-medium mt-1">£{content.price.toFixed(2) * content.count}</p>
                                         <p className="text-gray-400 text-xs">Category: {content.category}</p>
                                     </div>
                                     <div className="flex items-center justify-between mt-3">
@@ -118,23 +120,20 @@ function Cart(props) {
                                 </div>
                             </Card>
                         ))}
+                        <p className="text-blue-300 bg-gray-800 font-medium sticky bottom-0 right-0 w-full flex justify-end">Total = £{totalPrice.toFixed(2)}</p>
                     </div>
-
-                    {/* Payment Button */}
                     <div className="sticky bottom-0 right-0 w-full flex justify-end mt-4">
-                        <button
-                            onClick={() => console.log('Proceeding to payment...')}
+                        <Button
+                            onClick={() => navigate("/order")}
+                            disabled={isEmpty}
                             className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-full shadow-lg hover:shadow-blue-500/30 transition-all duration-300"
                         >
                             Proceed to Payment
-                        </button>
+                        </Button>
                     </div>
                 </div>
             </div>
-
-
         </>
-
     )
 }
 

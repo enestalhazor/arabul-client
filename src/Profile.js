@@ -4,6 +4,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "./components/ui/avatar"
 import { Button } from "./components/ui/button"
 import { Input } from "./components/ui/input"
 import { Label } from "./components/ui/label"
+import { useNavigate } from "react-router-dom"
 
 function Profile(props) {
 
@@ -17,8 +18,9 @@ function Profile(props) {
     const [address, setAddress] = useState(profile?.address || "")
     const [profilepicture, setProfilePic] = useState(profile?.profilepicture)
 
-    function changeProfileInfos() {
+    const navigate = useNavigate()
 
+    function changeProfileInfos() {
         const formData = new FormData()
         if (profile.name !== name) {
             formData.append("name", name)
@@ -65,56 +67,72 @@ function Profile(props) {
     return (
         <>
             <div className="flex flex-col items-center min-h-screen bg-gray-900 p-6">
-                <div className="w-full max-w-md flex justify-between items-center mb-6">
-                    <Button
-                        variant="ghost"
-                        className="flex items-center gap-2 text-gray-600 hover:text-black"
-                    >
-                    </Button>
-                </div>
-                <Card className="w-full max-w-md text-center shadow-lg rounded-2xl bg-black">
-                    <CardHeader className="flex flex-col items-center gap-3">
-                        <Avatar className="w-18 h-18 border-1 border-primary/20">
+                <Card className="w-full max-w-md shadow-lg rounded-2xl bg-black">
+                    <CardHeader className="flex flex-col items-center gap-4 pt-6">
+                        <Avatar className="w-20 h-20 border border-primary/20">
                             <AvatarImage src={`http://localhost:8090/${profile.profile_picture}`} />
                         </Avatar>
-                        <div className="space-y-2">
+                        <h3>{profile.name}</h3>
+                        <div className="w-full space-y-4">
                             <div className="space-y-1">
-                                <Label className="text-gray-600">Full Name</Label>
-                                <Input disabled={isDisabled} onChange={(e) => { setName(e.target.value) }} value={name} className="text-lg font-semibold" />
-                            </div>
-                            <div className="space-y-1">
-                                <Label className="text-gray-600">Email</Label>
-                                <Input disabled={isDisabled} onChange={(e) => { setEmail(e.target.value) }} value={email} className="text-gray-700" />
-                            </div>
-                            <div className="space-y-1">
-                                <Label className="text-gray-600">Phone</Label>
-                                <Input disabled={isDisabled} onChange={(e) => { setPhone(e.target.value) }} value={phone} className="text-gray-700" />
-                            </div>
-                            <div className="space-y-1">
-                                <Label disabled={isDisabled} className="text-gray-600">Password</Label>
+                                <Label className="text-gray-400">Full Name</Label>
                                 <Input
                                     disabled={isDisabled}
-                                    onChange={(e) => { setPassword(e.target.value) }}
-                                    type="password"
-                                    value={password || ""}
-                                    className="text-gray-700"
+                                    onChange={(e) => setName(e.target.value)}
+                                    value={name}
+                                    className="text-lg font-semibold text-gray-200 placeholder-gray-500"
                                 />
                             </div>
                             <div className="space-y-1">
-                                <Label className="text-gray-600">Address</Label>
-                                <Input disabled={isDisabled} onChange={(e) => { setAddress(e.target.value) }} value={address || "—"} className="text-gray-700" />
+                                <Label className="text-gray-400">Email</Label>
+                                <Input
+                                    disabled={isDisabled}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    value={email}
+                                    className="text-gray-200 placeholder-gray-500"
+                                />
+                            </div>
+                            <div className="space-y-1">
+                                <Label className="text-gray-400">Phone</Label>
+                                <Input
+                                    disabled={isDisabled}
+                                    onChange={(e) => setPhone(e.target.value)}
+                                    value={phone}
+                                    className="text-gray-200 placeholder-gray-500"
+                                />
+                            </div>
+                            <div className="space-y-1">
+                                <Label className="text-gray-400">Password</Label>
+                                <Input
+                                    disabled={isDisabled}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    type="password"
+                                    value={password || ""}
+                                    className="text-gray-200 placeholder-gray-500"
+                                />
+                            </div>
+                            <div className="space-y-1">
+                                <Label className="text-gray-400">Address</Label>
+                                <Input
+                                    disabled={isDisabled}
+                                    onChange={(e) => setAddress(e.target.value)}
+                                    value={address || "—"}
+                                    className="text-gray-200 placeholder-gray-500"
+                                />
                             </div>
                         </div>
                     </CardHeader>
-                    <CardContent>
-                    </CardContent>
-                    <CardFooter className="flex justify-center">
-                        {isDisabled && (
-                            <Button onClick={() => setIsDisabled(isDisabled => !isDisabled)} variant="default">Edit</Button>
+                    <CardFooter className="flex justify-center gap-4 mt-6 pb-6">
+                        {isDisabled ? (
+                            <Button onClick={() => setIsDisabled(false)} variant="default">
+                                Edit
+                            </Button>
+                        ) : (
+                            <Button onClick={changeProfileInfos} variant="default">
+                                Save
+                            </Button>
                         )}
-                        {!isDisabled && (
-                            <Button onClick={() => { changeProfileInfos(); }} variant="default">Save</Button>
-                        )}
+                        <Button className="bg-blue-800"  onClick={() => { navigate("/orders") }}>My Orders</Button>
                     </CardFooter>
                 </Card>
             </div>

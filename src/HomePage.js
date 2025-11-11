@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button } from "./components/ui/button"
 import { Input } from "./components/ui/input"
+import SearchedProducts from './SearchedProducts';
 import Products from './Products'
 import { useState, useEffect } from 'react'
 import { SearchIcon, ShoppingCart } from 'lucide-react'
@@ -9,11 +10,17 @@ import { useNavigate } from 'react-router-dom'
 
 function HomePage(props) {
 
-    const [products, setProducts] = useState([])
-    const [isOpen, setOpen] = useState(false)
-    const [error, setError] = useState("")
-    const [cartCount, setCartCount] = useState(0)
     const { token, profile } = props
+    const [cartCount, setCartCount] = useState(0)
+    const [products, setProducts] = useState([])
+    const [term, setTerm] = useState("")
+    const [error, setError] = useState("")
+    const [isOpen, setOpen] = useState(false)
+    const [searchedProducts, setSearchedProducts] = useState([]);
+    const [searchedProductsPage, setSearchedProductsPage] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState(null);
+    const [selectedProductPage, setSelectedProductPage] = useState(false);
+
     const navigate = useNavigate()
 
     const fetchProducts = () => {
@@ -23,6 +30,24 @@ function HomePage(props) {
                     setError("")
                     return res.json().then(data => {
                         setProducts(data)
+                    })
+                }
+                else {
+                    res.text().then((text) => {
+                        setError(text)
+                        console.log(error)
+                    })
+                }
+            })
+    }
+
+    const fetchSearchedProducts = () => {
+        fetch("http://localhost:8080/api/products/search?term=" + term)
+            .then(res => {
+                if (res.status === 200) {
+                    setError("")
+                    return res.json().then(data => {
+                        setSearchedProducts(data)
                     })
                 }
                 else {
@@ -129,6 +154,7 @@ function HomePage(props) {
                     <div className='flex-1 flex items-center gap-2'>
                         <SearchIcon></SearchIcon>
                         <Input
+                            onChange={(e) => setTerm(e.target.value)}
                             type="text"
                             placeholder="Search product"
                             className="flex-1 rounded-full text-xl px-4 py-2 bg-black text-gray-700 placeholder-gray-700"
@@ -136,6 +162,7 @@ function HomePage(props) {
 
                     </div>
                     <Button
+                        onClick={() => { fetchSearchedProducts(); setSearchedProductsPage(true); }}
                         type="submit"
                         variant="outline"
                         className="w-full sm:w-auto px-4 py-2 text-sm bg-black text-gray-700 hover:bg-gray-700 rounded-full"
@@ -162,7 +189,7 @@ function HomePage(props) {
                 )}
 
                 <div className="mt-10">
-                    <Products className="bg-black" products={products} updateCart={updateCart} />
+                    <Products className="bg-black" setSearchedProductsPage={setSearchedProductsPage} setSearchedProducts={setSearchedProducts} searchedProducts={searchedProducts} searchedProductsPage={searchedProductsPage} setSelectedProductPage={setSelectedProductPage} setSelectedProduct={setSelectedProduct} selectedProductPage={selectedProductPage} selectedProduct={selectedProduct} products={products} updateCart={updateCart} />
                 </div>
             </div>
 
