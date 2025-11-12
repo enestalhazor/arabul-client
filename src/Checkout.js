@@ -3,6 +3,7 @@ import { Card, CardHeader, CardContent, CardFooter } from "./components/ui/card"
 import { Button } from "./components/ui/button"
 import { Input } from "./components/ui/input"
 import { Label } from "./components/ui/label"
+import { useNavigate } from "react-router-dom"
 
 function Checkout(props) {
 
@@ -13,6 +14,7 @@ function Checkout(props) {
     const [ExpirationDate, setExpirationDate] = useState("")
     const [FirstName, setFirstName] = useState("")
     const [LastName, setLastName] = useState("")
+    const navigate = useNavigate()
 
     function checkoutOrder() {
 
@@ -51,6 +53,7 @@ function Checkout(props) {
                             method: "DELETE",
                             headers: { "Authorization": "Bearer " + token }
                         })
+                        navigate("/orders")
                     }
                 })
 

@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom'
 
 function HomePage(props) {
 
-    const { token, profile } = props
+    const { token, profile, logOut } = props
     const [cartCount, setCartCount] = useState(0)
     const [products, setProducts] = useState([])
     const [term, setTerm] = useState("")
@@ -124,15 +124,10 @@ function HomePage(props) {
                     setCartCount(data.reduce((a, b) => a + b.count, 0))
                 })
         }
+        else {
+            setCartCount(0)
+        }
     }, [token])
-
-    if (!profile) {
-        return (
-            <div className="bg-black flex justify-center items-center h-screen text-white">
-                Loading profile...
-            </div>
-        )
-    }
 
     return (
         <>
@@ -140,18 +135,21 @@ function HomePage(props) {
                 <div className="absolute top-4 right-4">
                     <div className="relative">
                         <img
-                            src={`http://localhost:8090/${profile.profile_picture ? profile.profile_picture : "default.jpg"}`}
+                            src={`http://localhost:8090/${(profile && profile.profile_picture) ? profile.profile_picture : "default.jpg"}`}
                             alt="Profile"
                             className="border w-10 h-10 rounded-full cursor-pointer"
                             onClick={() => setOpen(!isOpen)}
                         />
-                        <div>{profile.name}</div>
+                        <div>{(profile && profile.name) ? profile.name : ""}</div>
                         {isOpen && (
                             <div className="absolute right-0 mt-2 bg-gray-900 rounded-lg shadow-xl py-2 w-36 border">
                                 <div className="px-4 py-2 text-white hover:bg-gray-700 cursor-pointer" onClick={() => navigate("/login")}>Login</div>
                                 <div className="px-4 py-2 text-white hover:bg-gray-700 cursor-pointer" onClick={() => navigate("/register")}>Register</div>
                                 {token && (
-                                    <div className="px-4 py-2 text-white hover:bg-gray-700 cursor-pointer" onClick={() => navigate("/profile")}>Profile</div>
+                                    <>
+                                        <div className="px-4 py-2 text-white hover:bg-gray-700 cursor-pointer" onClick={() => navigate("/profile")}>Profile</div>
+                                        <div className="px-4 py-2 text-white hover:bg-gray-700 cursor-pointer" onClick={() => logOut()}>Logout</div>
+                                    </>
                                 )}
                             </div>
                         )}
