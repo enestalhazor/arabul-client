@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
     Card,
     CardContent,
@@ -8,7 +8,6 @@ import {
     CardTitle,
 } from "./components/ui/card"
 import { ShoppingCart } from 'lucide-react'
-import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from "lucide-react";
 
 
@@ -16,7 +15,6 @@ import { ArrowLeft } from "lucide-react";
 function SearchedProducts(props) {
 
     const { updateCart, setSelectedProduct, setSelectedProductPage, searchedProducts, setSearchedProductsPage } = props
-    const navigate = useNavigate()
 
     return (
         <>

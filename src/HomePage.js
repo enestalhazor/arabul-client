@@ -1,7 +1,6 @@
 import React from 'react'
 import { Button } from "./components/ui/button"
 import { Input } from "./components/ui/input"
-import SearchedProducts from './SearchedProducts';
 import Products from './Products'
 import { useState, useEffect } from 'react'
 import { SearchIcon, ShoppingCart } from 'lucide-react'
@@ -125,7 +124,15 @@ function HomePage(props) {
                     setCartCount(data.reduce((a, b) => a + b.count, 0))
                 })
         }
-    }, [])
+    }, [token])
+
+    if (!profile) {
+        return (
+            <div className="bg-black flex justify-center items-center h-screen text-white">
+                Loading profile...
+            </div>
+        )
+    }
 
     return (
         <>
@@ -181,7 +188,6 @@ function HomePage(props) {
                         </span>
                     </div>
                 </div>
-
                 {error && (
                     <div className="bg-red-200 text-red-600 px-2 py-2 rounded-md">
                         {JSON.parse(error).info}

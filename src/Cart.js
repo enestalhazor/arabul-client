@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
     Card,
-    CardAction,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
 } from "./components/ui/card"
 import { Button } from './components/ui/button';
 import { useNavigate } from 'react-router-dom';

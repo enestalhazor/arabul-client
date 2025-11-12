@@ -9,8 +9,7 @@ import { useNavigate } from "react-router-dom"
 function Profile(props) {
 
     const { profile, token, setProfile } = props
-    console.log(profile)
-    const [isDisabled, setIsDisabled] = useState(true);
+    const [isDisabled, setIsDisabled] = useState(true)
     const [name, setName] = useState(profile?.name || "")
     const [email, setEmail] = useState(profile?.email || "")
     const [password, setPassword] = useState("")

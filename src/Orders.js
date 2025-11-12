@@ -1,20 +1,16 @@
 import React from 'react'
-import { Button } from "./components/ui/button"
 import { useState, useEffect } from 'react'
 import {
     Card,
-    CardAction,
     CardContent,
-    CardDescription,
     CardFooter,
     CardHeader,
-    CardTitle,
 } from "./components/ui/card"
 
 
 function Orders(props) {
 
-    const { token, profile } = props
+    const { token } = props
     const [orders, setOrders] = useState([]);
 
     useEffect(() => {
@@ -37,7 +33,7 @@ function Orders(props) {
                     }
                 })
         }
-    }, [])
+    }, [token])
 
     return (
         <div className="min-h-screen bg-gray-900 text-white p-6 flex flex-col items-center gap-6">
@@ -76,7 +72,7 @@ function Orders(props) {
                                             <h4 className="font-semibold text-white">{product.name}</h4>
                                             <p className="text-gray-400 text-sm line-clamp-2">{product.description}</p>
                                             <p className="text-blue-400 font-medium mt-1">£{(product.price * product.count).toFixed(2)}</p>
-                                            <p className="text-gray-400 text-xs">Category: {product.category} | Quantity: {product.count}</p>
+                                            <p className="text-gray-400 text-xs">Category: {product.category} | Count: {product.count}</p>
                                         </div>
                                     </div>
                                 ))}

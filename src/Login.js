@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Button } from "./components/ui/button"
 import {
     Card,
-    CardAction,
     CardContent,
     CardDescription,
     CardFooter,
@@ -14,12 +13,10 @@ import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
 
 function Login(props) {
-
     const navigate = useNavigate()
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("")
     const [error, setError] = useState("")
-    // idle, loading, success, fail
 
     const {
         setToken,

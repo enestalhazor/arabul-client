@@ -8,7 +8,6 @@ import Login from './Login';
 import Checkout from './Checkout';
 import Orders from './Orders';
 import {
-  BrowserRouter as Router,
   Routes,
   Route,
   useNavigate,
@@ -16,10 +15,10 @@ import {
 import { jwtDecode } from 'jwt-decode';
 
 
-export const Arabul = (props) => {
+export const Arabul = () => {
 
   const [token, setToken] = useState("")
-  const [profile, setProfile] = useState([])
+  const [profile, setProfile] = useState(null)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -41,7 +40,6 @@ export const Arabul = (props) => {
         navigate("/home")
       })
     })
-    navigate("/home")
   }, [])
 
   return (
@@ -53,7 +51,8 @@ export const Arabul = (props) => {
       <Route path='/cart' element={<Cart token={token}></Cart>} ></Route>
       <Route path='/order' element={<Checkout token={token}></Checkout>} ></Route>
       <Route path='/orders' element={<Orders token={token}></Orders>} ></Route>
-      <Route path='/profile' element={<Profile profile={profile} token={token} setProfile={setProfile}></Profile>} ></Route>
+      <Route path='/profile' element={profile ? <Profile profile={profile} token={token} setProfile={setProfile}></Profile> : <></>} ></Route>
+      <Route path='/product/:id' element={<Product token={token}></Product>} ></Route>
     </Routes>
   );
 };
