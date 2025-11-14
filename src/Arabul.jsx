@@ -7,6 +7,9 @@ import Profile from './Profile';
 import Login from './Login';
 import Checkout from './Checkout';
 import Orders from './Orders';
+
+import { AppContext } from './AppContext';
+
 import {
   Routes,
   Route,
@@ -37,29 +40,40 @@ export const Arabul = () => {
       val.json().then(function (a) {
         console.log(a)
         setProfile(a)
+        navigate("/home")
       })
     })
   }, [])
 
-  function logOut()
-    {
-        localStorage.removeItem("token")
-        setProfile(null)
-        setToken("")
-        return
-    }
+  function logOut() {
+    localStorage.removeItem("token")
+    setProfile(null)
+    setToken("")
+    return
+  }
+
+  const data = {
+    setProfile,
+    profile,
+    setToken,
+    token,
+    logOut,
+    navigate
+  }
 
   return (
-    <Routes>
-      <Route path='/home' element={<HomePage profile={profile} token={token} logOut={logOut} />} ></Route>
-      <Route path='/login' element={<Login setToken={setToken} setProfile={setProfile} ></Login>} ></Route>
-      <Route path='/register' element={<Register></Register>} ></Route>
-      <Route path='/product' element={<Product></Product>} ></Route>
-      <Route path='/cart' element={<Cart token={token}></Cart>} ></Route>
-      <Route path='/order' element={<Checkout token={token}></Checkout>} ></Route>
-      <Route path='/orders' element={<Orders profile={profile} token={token}></Orders>} ></Route>
-      <Route path='/profile' element={profile ? <Profile profile={profile} token={token} setProfile={setProfile}></Profile> : <></>} ></Route>
-      <Route path='/product/:id' element={<Product token={token}></Product>} ></Route>
-    </Routes>
+    <AppContext.Provider value={data}>
+      <Routes>
+        <Route path='/home' element={<HomePage />} ></Route>
+        <Route path='/login' element={<Login />} ></Route>
+        <Route path='/register' element={<Register />} ></Route>
+        <Route path='/product' element={<Product />} ></Route>
+        <Route path='/cart' element={<Cart />} ></Route>
+        <Route path='/order' element={<Checkout />} ></Route>
+        <Route path='/orders' element={<Orders />} ></Route>
+        <Route path='/profile' element={profile ? <Profile /> : <></>} ></Route>
+        <Route path='/product/:id' element={<Product />} ></Route>
+      </Routes>
+    </AppContext.Provider>
   );
 };

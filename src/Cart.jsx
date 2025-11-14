@@ -4,11 +4,12 @@ import {
 } from "./components/ui/card"
 import { Button } from './components/ui/button';
 import { useNavigate } from 'react-router-dom';
+import { AppContext, useContext } from "./AppContext"
 
-function Cart(props) {
+function Cart() {
 
-    const { token } = props
-
+    const { token } = useContext(AppContext)
+    
     const [cart, setCart] = useState([])
     const [error, setError] = useState("")
 
@@ -82,7 +83,7 @@ function Cart(props) {
                         </div>
                     )}
                     <div className="flex flex-col gap-4 overflow-y-auto max-h-[80vh] pr-2">
-                        {cart.map((content) => (
+                        {cart.sort((a, b) => a.product_id - b.product_id).map((content) => (
                             <Card
                                 key={content.product_id}
                                 className="w-full bg-gray-900 text-white rounded-xl shadow-md border border-gray-800 hover:shadow-blue-500/20 transition-all duration-300 p-4 flex items-start gap-4"

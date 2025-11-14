@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { AppContext, useContext } from './AppContext';
 
 function Product(props) {
 
-    const { updateCart, token } = props
+    const { updateCart, token } = useContext(AppContext)
     const [product, setProduct] = useState(null)
     const { id } = useParams()
 

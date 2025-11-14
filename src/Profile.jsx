@@ -5,10 +5,12 @@ import { Button } from "./components/ui/button"
 import { Input } from "./components/ui/input"
 import { Label } from "./components/ui/label"
 import { useNavigate } from "react-router-dom"
+import { AppContext, useContext } from "./AppContext"
 
 function Profile(props) {
 
-    const { profile, token, setProfile } = props
+    const { profile, token, setProfile } = useContext(AppContext)
+    
     const [isDisabled, setIsDisabled] = useState(true)
     const [name, setName] = useState(profile?.name || "")
     const [email, setEmail] = useState(profile?.email || "")
@@ -131,7 +133,7 @@ function Profile(props) {
                                 Save
                             </Button>
                         )}
-                        <Button className="bg-blue-800"  onClick={() => { navigate("/orders") }}>My Orders</Button>
+                        <Button className="bg-blue-800" onClick={() => { navigate("/orders") }}>My Orders</Button>
                     </CardFooter>
                 </Card>
             </div>

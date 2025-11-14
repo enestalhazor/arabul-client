@@ -7,11 +7,12 @@ import {
     CardHeader,
 } from "./components/ui/card"
 import { useNavigate } from 'react-router-dom';
+import { AppContext, useContext } from './AppContext';
 
 
 function Orders(props) {
 
-    const { token, profile } = props
+    const { token, profile } = useContext(AppContext)
     const [orders, setOrders] = useState([]);
     const navigate = useNavigate()
 

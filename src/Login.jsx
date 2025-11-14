@@ -11,6 +11,8 @@ import {
 import { Input } from "./components/ui/input"
 import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
+import { AppContext, useContext } from "./AppContext"
+
 
 function Login(props) {
     const navigate = useNavigate()
@@ -18,10 +20,7 @@ function Login(props) {
     const [email, setEmail] = useState("")
     const [error, setError] = useState("")
 
-    const {
-        setToken,
-        setProfile,
-    } = props
+    const {setToken, setProfile } = useContext(AppContext)
 
     function handleSubmit() {
         const promise = fetch("http://localhost:8080/api/users/login", {

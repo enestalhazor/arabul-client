@@ -1,15 +1,16 @@
-import React from 'react'
 import { Button } from "./components/ui/button"
 import { Input } from "./components/ui/input"
 import Products from './Products'
 import { useState, useEffect } from 'react'
 import { SearchIcon, ShoppingCart } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
+import { AppContext, useContext } from "./AppContext"
 
 
-function HomePage(props) {
+function HomePage() {
 
-    const { token, profile, logOut } = props
+    const {token, profile, logOut, } = useContext(AppContext)
+
     const [cartCount, setCartCount] = useState(0)
     const [products, setProducts] = useState([])
     const [term, setTerm] = useState("")
