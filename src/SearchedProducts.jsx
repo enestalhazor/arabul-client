@@ -38,7 +38,7 @@ function SearchedProducts(props) {
                         </CardHeader>
                         <CardContent className="px-3 pb-3 pt-1">
                             <img
-                                onClick={() => { setSelectedProduct(product); setSelectedProductPage(true); }}
+                                onClick={() => {  setSelectedProductPage(true); }}
                                 src={`http://localhost:8090/${product.photo}`}
                                 alt={product.name}
                                 className="w-30 h-30 object-cover rounded-lg mb-2"

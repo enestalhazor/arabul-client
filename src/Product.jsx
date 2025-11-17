@@ -38,7 +38,7 @@ function Product(props) {
 
     return (
         <>
-            <div className="min-h-screen flex items-center justify-center bg-gray-900 px-4 py-10">
+            <div className="min-h-screen flex items-center justify-center bg-gray-950 px-4 py-10">
                 <div className="flex flex-col md:flex-row items-center bg-gradient-to-br bg-black text-white rounded-2xl shadow-xl max-w-2xl w-full overflow-hidden border border-gray-800">
                     <div className="md:w-1/2 w-full flex justify-center p-6 bg-black">
                         <img
