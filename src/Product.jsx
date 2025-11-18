@@ -30,7 +30,7 @@ function Product(props) {
 
     if (!product) {
         return (
-            <div className="flex bg-gray-900 justify-center items-center h-screen text-white">
+            <div className="flex bg-gray-950 justify-center items-center h-screen text-white">
                 Loading product...
             </div>
         );

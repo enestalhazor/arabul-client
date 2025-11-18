@@ -9,13 +9,11 @@ import { AppContext, useContext } from "./AppContext"
 
 function HomePage() {
 
-    const { token, setCartCount, setError, error, setSearchedProducts, searchedProducts, searchedProductsPage, setSearchedProductsPage } = useContext(AppContext)
+    const { token, setCartCount, setError, error, updateCart, setSearchedProducts, searchedProducts, searchedProductsPage, setSearchedProductsPage } = useContext(AppContext)
 
     const [products, setProducts] = useState([])
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [selectedProductPage, setSelectedProductPage] = useState(false);
-
-    const navigate = useNavigate()
 
     const fetchProducts = () => {
         fetch("http://localhost:8080/api/products")
@@ -31,54 +29,6 @@ function HomePage() {
                         setError(text)
                         console.log(error)
                     })
-                }
-            })
-    }
-
-    function updateCart(productId) {
-
-        if (!token) {
-            navigate("/login")
-            return
-        }
-
-        fetch("http://localhost:8080/api/cart", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + token
-            },
-            body: JSON.stringify({ "product_id": productId })
-        })
-            .then(res => {
-                if (res.ok) {
-                    setError("");
-
-                    fetch("http://localhost:8080/api/cart", {
-                        headers: {
-                            "Content-Type": "application/json",
-                            "Authorization": "Bearer " + token
-                        },
-                    })
-                        .then(res => {
-                            if (res.ok) {
-                                return res.json()
-                            }
-                        })
-                        .then((data) => {
-                            let total = 0
-                            for (let i = 0; i < data.length; i++) {
-                                total += data[i].count
-                            }
-                            setCartCount(total)
-                        })
-
-                    return res.json();
-                } else {
-                    return res.text().then(text => {
-                        setError(text);
-                        console.error(text);
-                    });
                 }
             })
     }

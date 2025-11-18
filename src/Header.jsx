@@ -3,38 +3,26 @@ import { Card, CardHeader, CardContent, CardFooter } from "./components/ui/card"
 import { Button } from "./components/ui/button"
 import { Input } from "./components/ui/input"
 import { Label } from "./components/ui/label"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { AppContext, useContext } from "./AppContext"
-import { SearchIcon, ShoppingCart } from "lucide-react"
+import { HomeIcon, SearchIcon, ShoppingCart } from "lucide-react"
 
 function Header(props) {
 
-    const { token, profile, logOut, cartCount, setError, error, setSearchedProducts, setSearchedProductsPage } = useContext(AppContext)
+    const { token, profile, logOut, cartCount, setError, error  } = useContext(AppContext)
     const navigate = useNavigate()
     const [isOpen, setOpen] = useState(false)
     const [term, setTerm] = useState("")
 
-    const fetchSearchedProducts = () => {
-        fetch("http://localhost:8080/api/products/search?term=" + term)
-            .then(res => {
-                if (res.status === 200) {
-                    setError("")
-                    return res.json().then(data => {
-                        setSearchedProducts(data)
-                    })
-                }
-                else {
-                    res.text().then((text) => {
-                        setError(text)
-                        console.log(error)
-                    })
-                }
-            })
-    }
 
     return (
         <div>
             <div className="bg-gray-950 text-white flex flex-col items-center gap-6 pt-2 sm:pt-4">
+                <div className="absolute top-4 left-4">
+                    <Link to={"/home"}>
+                        <HomeIcon className="left-4"></HomeIcon>
+                    </Link>
+                </div>
                 <div className="absolute top-4 right-4">
                     <div className="relative">
                         <img
@@ -69,7 +57,7 @@ function Header(props) {
                         />
                     </div>
                     <Button
-                        onClick={() => { fetchSearchedProducts(); setSearchedProductsPage(true); }}
+                        onClick={() => { navigate("/product/searched/" + term) }}
                         type="submit"
                         variant="outline"
                         className="w-full sm:w-auto px-4 py-2 text-sm bg-black text-gray-700 hover:bg-gray-700 rounded-full"

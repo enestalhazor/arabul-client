@@ -8,6 +8,7 @@ import Login from './Login';
 import Checkout from './Checkout';
 import Orders from './Orders';
 import Header from './Header';
+import SearchedProducts from './SearchedProducts';
 
 import { AppContext } from './AppContext';
 
@@ -29,6 +30,53 @@ export const Arabul = () => {
   const [searchedProducts, setSearchedProducts] = useState([]);
   const [searchedProductsPage, setSearchedProductsPage] = useState(false);
 
+  function updateCart(productId) {
+
+    if (!token) {
+      navigate("/login")
+      return
+    }
+
+    fetch("http://localhost:8080/api/cart", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + token
+      },
+      body: JSON.stringify({ "product_id": productId })
+    })
+      .then(res => {
+        if (res.ok) {
+          setError("");
+
+          fetch("http://localhost:8080/api/cart", {
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": "Bearer " + token
+            },
+          })
+            .then(res => {
+              if (res.ok) {
+                return res.json()
+              }
+            })
+            .then((data) => {
+              let total = 0
+              for (let i = 0; i < data.length; i++) {
+                total += data[i].count
+              }
+              setCartCount(total)
+            })
+
+          return res.json();
+        } else {
+          return res.text().then(text => {
+            setError(text);
+            console.error(text);
+          });
+        }
+      })
+  }
 
   const navigate = useNavigate()
 
@@ -48,7 +96,6 @@ export const Arabul = () => {
       val.json().then(function (a) {
         console.log(a)
         setProfile(a)
-        navigate("/home")
       })
     })
   }, [])
@@ -71,8 +118,7 @@ export const Arabul = () => {
     error,
     setSearchedProducts,
     searchedProducts,
-    setSearchedProductsPage,
-    searchedProductsPage,
+    updateCart,
     logOut,
     navigate
   }
@@ -91,6 +137,7 @@ export const Arabul = () => {
           <Route path='/orders' element={<Orders />} ></Route>
           <Route path='/profile' element={profile ? <Profile /> : <></>} ></Route>
           <Route path='/product/:id' element={<Product />} ></Route>
+          <Route path='/product/searched/:term' element={<SearchedProducts />} ></Route>
         </Routes>
       </AppContext.Provider>
     </div>

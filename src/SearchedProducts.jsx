@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import {
     Card,
     CardContent,
@@ -8,24 +8,39 @@ import {
     CardTitle,
 } from "./components/ui/card"
 import { ShoppingCart } from 'lucide-react'
-import { ArrowLeft } from "lucide-react";
+import { useNavigate, useParams } from 'react-router-dom';
+import { AppContext } from './AppContext';
 
 
 
 function SearchedProducts(props) {
 
-    const { updateCart, setSelectedProduct, setSelectedProductPage, searchedProducts, setSearchedProductsPage } = props
+    const { updateCart, searchedProducts, setSearchedProducts, error, setError } = useContext(AppContext)
+    const navigate = useNavigate()
+    const { term } = useParams()
+
+    useEffect(() => {
+        fetch("http://localhost:8080/api/products/search?term=" + term)
+            .then(res => {
+                if (res.status === 200) {
+                    setError("")
+                    return res.json().then(data => {
+                        setSearchedProducts(data)
+                    })
+                }
+                else {
+                    res.text().then((text) => {
+                        setError(text)
+                        console.log(error)
+                    })
+                }
+            })
+
+    }, [term])
 
     return (
         <>
-            <button
-                onClick={() => setSearchedProductsPage(false)}
-                className="flex items-center gap-2 text-gray-400 hover:text-white transition-all duration-200 hover:translate-x-[-2px]"
-            >
-                <ArrowLeft className="w-5 h-5 stroke-[1.5]" />
-                <span className="text-sm font-medium tracking-wide">Back</span>
-            </button>
-            <div className="flex flex-wrap justify-center gap-3 p-4 sm:p-4">
+            <div className="min-h-screen flex items-center justify-center bg-gray-950 px-4 py-10">
 
                 {searchedProducts.map((product) => (
                     <Card
@@ -38,7 +53,7 @@ function SearchedProducts(props) {
                         </CardHeader>
                         <CardContent className="px-3 pb-3 pt-1">
                             <img
-                                onClick={() => {  setSelectedProductPage(true); }}
+                                onClick={() => { navigate("/product/" + product.id) }}
                                 src={`http://localhost:8090/${product.photo}`}
                                 alt={product.name}
                                 className="w-30 h-30 object-cover rounded-lg mb-2"
@@ -61,7 +76,7 @@ function SearchedProducts(props) {
                         </CardFooter>
                     </Card>
                 ))}
-            </div>
+            </div >
         </>
     )
 }
