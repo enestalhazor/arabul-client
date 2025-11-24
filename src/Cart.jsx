@@ -74,9 +74,8 @@ function Cart() {
 
     return (
         <>
-            <div className="min-h-screen relative bg-black text-white flex flex-col items-center justify-center">
-                <div className="absolute inset-0 bg-black z-0"></div>
-                <div className="relative z-10 w-[700px] max-w-full flex flex-col gap-4 p-6 bg-gray-800 rounded-lg shadow-xl">
+            <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center">
+                <div className=" w-[700px] max-w-full flex flex-col gap-4 p-6 bg-gray-800 rounded-lg shadow-xl">
                     {cart.length < 1 && (
                         <div className="w-full p-6 bg-gray-700 text-center rounded-lg text-gray-300 text-lg font-medium">
                             Your cart is empty.

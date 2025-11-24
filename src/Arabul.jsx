@@ -24,6 +24,7 @@ import { jwtDecode } from 'jwt-decode';
 export const Arabul = () => {
 
   const [token, setToken] = useState("")
+  const [isTokenCheckDone, setIsTokenCheckDone] = useState(false)
   const [profile, setProfile] = useState(null)
   const [cartCount, setCartCount] = useState(0)
   const [error, setError] = useState("")
@@ -83,8 +84,10 @@ export const Arabul = () => {
   useEffect(() => {
     const t = localStorage.getItem("token")
     if (!t) {
+      setIsTokenCheckDone(true)
       return
     }
+
     const token = jwtDecode(t)
     const promise2 = fetch("http://localhost:8080/api/users/" + token.id, {
       headers: { "Authorization": t }
@@ -96,6 +99,7 @@ export const Arabul = () => {
       val.json().then(function (a) {
         console.log(a)
         setProfile(a)
+        setIsTokenCheckDone(true)
       })
     })
   }, [])
@@ -123,6 +127,9 @@ export const Arabul = () => {
     navigate
   }
 
+  if (!isTokenCheckDone) {
+    return <div>Loading...</div>
+  }
   return (
     <div>
       <AppContext.Provider value={data}>

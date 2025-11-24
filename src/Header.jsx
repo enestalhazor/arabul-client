@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Card, CardHeader, CardContent, CardFooter } from "./components/ui/card"
 import { Button } from "./components/ui/button"
 import { Input } from "./components/ui/input"
@@ -9,15 +9,38 @@ import { HomeIcon, SearchIcon, ShoppingCart } from "lucide-react"
 
 function Header(props) {
 
-    const { token, profile, logOut, cartCount, setError, error  } = useContext(AppContext)
+    const { token, profile, logOut, cartCount, setError, error, setCartCount } = useContext(AppContext)
     const navigate = useNavigate()
     const [isOpen, setOpen] = useState(false)
     const [term, setTerm] = useState("")
 
 
+    useEffect(() => {
+        if (token) {
+            fetch("http://localhost:8080/api/cart", {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + token
+                },
+            })
+                .then(res => {
+                    if (res.ok) {
+                        return res.json()
+                    }
+                })
+                .then((data) => {
+                    setCartCount(data.reduce((a, b) => a + b.count, 0))
+                })
+        }
+        else {
+            setCartCount(0)
+        }
+    }, [token])
+
+
     return (
         <div>
-            <div className="bg-gray-950 text-white flex flex-col items-center gap-6 pt-2 sm:pt-4">
+            <div className="bg-gray-950 relative text-white flex flex-col items-center gap-6 pt-2 sm:pt-4">
                 <div className="absolute top-4 left-4">
                     <Link to={"/home"}>
                         <HomeIcon className="left-4"></HomeIcon>
@@ -29,7 +52,7 @@ function Header(props) {
                             src={`http://localhost:8090/${(profile && profile.profile_picture) ? profile.profile_picture : "default.jpg"}`}
                             alt="Profile"
                             className="border w-10 h-10 rounded-full cursor-pointer"
-                            onClick={() => setOpen(!isOpen)}
+                            onClick={() =>  setOpen((isOpen) => (!isOpen))}
                         />
                         <div>{(profile && profile.name) ? profile.name : ""}</div>
                         {isOpen && (

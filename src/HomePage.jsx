@@ -35,26 +35,7 @@ function HomePage() {
 
     useEffect(() => {
         fetchProducts()
-        if (token) {
-            fetch("http://localhost:8080/api/cart", {
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": "Bearer " + token
-                },
-            })
-                .then(res => {
-                    if (res.ok) {
-                        return res.json()
-                    }
-                })
-                .then((data) => {
-                    setCartCount(data.reduce((a, b) => a + b.count, 0))
-                })
-        }
-        else {
-            setCartCount(0)
-        }
-    }, [token])
+    }, [])
 
     return (
         <>
