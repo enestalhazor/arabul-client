@@ -21,7 +21,7 @@ function Cart() {
             return
         }
 
-        fetch("http://localhost:8080/api/cart", {
+        fetch(`${backendBaseUrl}/api/cart`, {
             method: "GET",
             headers: {
                 "Authorization": "Bearer " + token
@@ -44,7 +44,7 @@ function Cart() {
     }
 
     function removeProduct(productId) {
-        fetch("http://localhost:8080/api/cart/" + productId, {
+        fetch(`${backendBaseUrl}/api/cart/` + productId, {
             method: "DELETE",
             headers: {
                 "Authorization": "Bearer " + token
@@ -74,7 +74,7 @@ function Cart() {
 
     return (
         <>
-            <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center">
+            <div className="min-h-screen bg-gray-700 text-white flex flex-col items-center justify-center">
                 <div className=" w-[700px] max-w-full flex flex-col gap-4 p-6 bg-gray-800 rounded-lg shadow-xl">
                     {cart.length < 1 && (
                         <div className="w-full p-6 bg-gray-700 text-center rounded-lg text-gray-300 text-lg font-medium">

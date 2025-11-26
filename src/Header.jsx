@@ -17,7 +17,7 @@ function Header(props) {
 
     useEffect(() => {
         if (token) {
-            fetch("http://localhost:8080/api/cart", {
+            fetch(`${backendBaseUrl}/api/cart`, {
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": "Bearer " + token
@@ -39,66 +39,56 @@ function Header(props) {
 
 
     return (
-        <div>
-            <div className="bg-gray-950 relative text-white flex flex-col items-center gap-6 pt-2 sm:pt-4">
-                <div className="absolute top-4 left-4">
-                    <Link to={"/home"}>
-                        <HomeIcon className="left-4"></HomeIcon>
-                    </Link>
+        <div className="bg-gray-700 text-white flex items-center justify-between p-3 sm:p-2 gap-1">
+            <Link to="/home">
+                <HomeIcon className="w-6 h-6 sm:w-7 sm:h-7" />
+            </Link>
+            <div className="flex items-center bg-black rounded-full px-3 py-2 flex-1 min-w-[150px] max-w-[600px]">
+                <SearchIcon className="w-5 h-5 text-gray-500" />
+                <Input
+                    onChange={(e) => setTerm(e.target.value)}
+                    type="text"
+                    placeholder="Search product"
+                    className="bg-black border-none focus-visible:ring-0 placeholder-gray-700 text-gray-300 text-sm ml-2 w-full"
+                />
+                <Button
+                    onClick={() => navigate(`/product/searched/${term}`)}
+                    variant="outline"
+                    className="ml-2 px-3 py-1 text-sm bg-black text-gray-300 hover:bg-gray-700 rounded-full"
+                >
+                    Search
+                </Button>
+                <div className="relative">
+                    <ShoppingCart
+                        onClick={() => (token ? navigate('/cart') : navigate('/login'))}
+                        className="w-6 h-6 sm:w-7 sm:h-7 cursor-pointer hover:text-gray-300"
+                    />
+                    <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">
+                        {cartCount}
+                    </span>
                 </div>
-                <div className="absolute top-4 right-4">
-                    <div className="relative">
-                        <img
-                            src={`http://localhost:8090/${(profile && profile.profile_picture) ? profile.profile_picture : "default.jpg"}`}
-                            alt="Profile"
-                            className="border w-10 h-10 rounded-full cursor-pointer"
-                            onClick={() =>  setOpen((isOpen) => (!isOpen))}
-                        />
-                        <div>{(profile && profile.name) ? profile.name : ""}</div>
-                        {isOpen && (
-                            <div className="absolute right-0 mt-2 bg-gray-900 rounded-lg shadow-xl py-2 w-36 border">
-                                <div className="px-4 py-2 text-white hover:bg-gray-700 cursor-pointer" onClick={() => navigate("/login")}>Login</div>
-                                <div className="px-4 py-2 text-white hover:bg-gray-700 cursor-pointer" onClick={() => navigate("/register")}>Register</div>
-                                {token && (
-                                    <>
-                                        <div className="px-4 py-2 text-white hover:bg-gray-700 cursor-pointer" onClick={() => navigate("/profile")}>Profile</div>
-                                        <div className="px-4 py-2 text-white hover:bg-gray-700 cursor-pointer" onClick={() => logOut()}>Logout</div>
-                                    </>
-                                )}
-                            </div>
+            </div>
+            <div className="relative text-center flex flex-col items-center">
+                <img
+                    src={`http://localhost:8090/${profile?.profile_picture ?? "default.jpg"}`}
+                    alt="Profile"
+                    className="border w-10 h-10 rounded-full cursor-pointer"
+                    onClick={() => setOpen(!isOpen)}
+                />
+                <div className="text-xs text-gray-200 sm:text-sm mt-1 truncate max-w-[90px]">{profile?.name ?? ""}</div>
+
+                {isOpen && (
+                    <div className="absolute top-12 right-0 bg-gray-900 rounded-lg shadow-xl py-2 w-36 border z-50">
+                        <div className="px-4 py-2 hover:bg-gray-700 cursor-pointer" onClick={() => navigate('/login')}>Login</div>
+                        <div className="px-4 py-2 hover:bg-gray-700 cursor-pointer" onClick={() => navigate('/register')}>Register</div>
+                        {token && (
+                            <>
+                                <div className="px-4 py-2 hover:bg-gray-700 cursor-pointer" onClick={() => navigate('/profile')}>Profile</div>
+                                <div className="px-4 py-2 hover:bg-gray-700 cursor-pointer" onClick={logOut}>Logout</div>
+                            </>
                         )}
                     </div>
-                </div>
-                <div className="flex flex-wrap items-center gap-2">
-                    <div className='flex-1 flex items-center gap-2'>
-                        <SearchIcon />
-                        <Input
-                            onChange={(e) => setTerm(e.target.value)}
-                            type="text"
-                            placeholder="Search product"
-                            className="flex-1 rounded-full text-xl px-4 py-2 bg-black text-gray-700 placeholder-gray-700"
-                        />
-                    </div>
-                    <Button
-                        onClick={() => { navigate("/product/searched/" + term) }}
-                        type="submit"
-                        variant="outline"
-                        className="w-full sm:w-auto px-4 py-2 text-sm bg-black text-gray-700 hover:bg-gray-700 rounded-full"
-                    >
-                        Search
-                    </Button>
-                    <div className="relative">
-                        <ShoppingCart onClick={() => {
-                            if (!token) {
-                                navigate("/login")
-                                return
-                            } navigate("/cart")
-                        }} className="w-6 h-6 text-white cursor-pointer hover:text-gray-300 transition" />
-                        <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold px-1.25 py-1.0 rounded-full">
-                            {cartCount}
-                        </span>
-                    </div>
-                </div>
+                )}
             </div>
         </div>
     )

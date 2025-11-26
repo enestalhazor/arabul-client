@@ -19,6 +19,7 @@ import {
   Navigate,
 } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
+import { backendBaseUrl } from './env';
 
 
 export const Arabul = () => {
@@ -38,7 +39,7 @@ export const Arabul = () => {
       return
     }
 
-    fetch("http://localhost:8080/api/cart", {
+    fetch(`${backendBaseUrl}/api/cart`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -89,7 +90,7 @@ export const Arabul = () => {
     }
 
     const token = jwtDecode(t)
-    const promise2 = fetch("http://localhost:8080/api/users/" + token.id, {
+    const promise2 = fetch(`${backendBaseUrl}/api/users/` + token.id, {
       headers: { "Authorization": t }
     })
 

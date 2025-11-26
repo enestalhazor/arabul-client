@@ -39,7 +39,7 @@ function Profile(props) {
             formData.append("address", address)
         }
 
-        const promise = fetch("http://localhost:8080/api/users/" + profile.id, {
+        const promise = fetch(`${backendBaseUrl}/api/users/` + profile.id, {
             method: "PUT",
             body: formData,
             headers: { "Authorization": "Bearer " + token }
@@ -51,7 +51,7 @@ function Profile(props) {
                 })
             }
             setIsDisabled(a => !a)
-            const promise2 = fetch("http://localhost:8080/api/users/" + profile.id, {
+            const promise2 = fetch(`${backendBaseUrl}/api/users/` + profile.id, {
                 headers: { "Authorization": "Bearer " + token }
             })
 
@@ -67,7 +67,7 @@ function Profile(props) {
 
     return (
         <>
-            <div className="flex flex-col items-center min-h-screen bg-gray-950 p-6">
+            <div className="flex flex-col items-center min-h-screen bg-gray-700 p-6">
                 <Card className="w-full max-w-md shadow-lg rounded-2xl bg-black">
                     <CardHeader className="flex flex-col items-center gap-4 pt-6">
                         <Avatar className="w-20 h-20 border border-primary/20">

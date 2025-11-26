@@ -23,10 +23,6 @@ function Products(props) {
         )
     }
 
-    if (searchedProducts && searchedProductsPage === true) {
-        return <SearchedProducts updateCart={updateCart} setSearchedProducts={setSearchedProducts} setSearchedProductsPage={setSearchedProductsPage} searchedProducts={searchedProducts} />
-    }
-
     return (
         <>
             <div className="flex flex-wrap justify-center gap-3 p-4 sm:p-4">

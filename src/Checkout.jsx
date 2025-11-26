@@ -5,10 +5,12 @@ import { Input } from "./components/ui/input"
 import { Label } from "./components/ui/label"
 import { useNavigate } from "react-router-dom"
 import { AppContext, useContext } from "./AppContext"
+import { backendBaseUrl } from "./env"
+
 
 function Checkout(props) {
 
-    const { token } = useContext(AppContext)
+    const { token, setCartCount } = useContext(AppContext)
 
     const [CreditCardNumber, setCreditCardNumber] = useState("")
     const [VerificationCode, setVerificationCode] = useState("")
@@ -19,7 +21,7 @@ function Checkout(props) {
 
     function checkoutOrder() {
 
-        fetch("http://localhost:8080/api/cart", {
+        fetch(`${backendBaseUrl}/api/cart`, {
             headers: { "Authorization": "Bearer " + token }
         })
             .then((res) => {
@@ -42,7 +44,7 @@ function Checkout(props) {
                 }).toString();
 
 
-                const promise = fetch(`http://localhost:8080/api/order?${queryParams}`, {
+                const promise = fetch(`${backendBaseUrl}/api/order?${queryParams}`, {
                     method: "POST",
                     body: JSON.stringify(result),
                     headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token }
@@ -50,10 +52,11 @@ function Checkout(props) {
 
                 promise.then((res) => {
                     if (res.status === 200) {
-                        fetch("http://localhost:8080/api/cart", {
+                        fetch(`${backendBaseUrl}/api/cart`, {
                             method: "DELETE",
                             headers: { "Authorization": "Bearer " + token }
                         })
+                        setCartCount(0)
                         navigate("/orders")
                     }
                 })
@@ -63,7 +66,7 @@ function Checkout(props) {
 
     return (
         <>
-            <div className="flex flex-col items-center justify-center min-h-screen bg-black px-4 py-10">
+            <div className="flex flex-col items-center justify-center min-h-screen bg-gray-700 px-4 py-10">
                 <Card className="w-full max-w-md bg-gray-950 text-gray-100 shadow-2xl rounded-3xl border border-gray-800">
                     <CardHeader className="space-y-4 text-center">
                         <h2 className="text-2xl font-bold text-white">Checkout</h2>

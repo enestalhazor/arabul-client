@@ -9,7 +9,7 @@ function Product(props) {
     const { id } = useParams()
 
     useEffect(() => {
-        fetch("http://localhost:8080/api/products/" + id, {
+        fetch(`${backendBaseUrl}/api/products/` + id, {
             headers: {
                 "Authorization": "Bearer " + token
             },
@@ -30,7 +30,7 @@ function Product(props) {
 
     if (!product) {
         return (
-            <div className="flex bg-gray-950 justify-center items-center h-screen text-white">
+            <div className="flex bg-gray-600 justify-center items-center h-screen text-white">
                 Loading product...
             </div>
         );

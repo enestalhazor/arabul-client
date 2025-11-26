@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react'
 import { SearchIcon, ShoppingCart } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { AppContext, useContext } from "./AppContext"
-
+import { backendBaseUrl } from "./env"
 
 function HomePage() {
 
@@ -16,7 +16,7 @@ function HomePage() {
     const [selectedProductPage, setSelectedProductPage] = useState(false);
 
     const fetchProducts = () => {
-        fetch("http://localhost:8080/api/products")
+        fetch(`${backendBaseUrl}/api/products`)
             .then(res => {
                 if (res.status === 200) {
                     setError("")
@@ -39,7 +39,7 @@ function HomePage() {
 
     return (
         <>
-            <div className="min-h-screen bg-gray-950 text-white flex flex-col items-center gap-6 pt-2 sm:pt-4">
+            <div className="min-h-screen bg-gray-700 text-white flex flex-col items-center gap-6 pt-2 sm:pt-4">
                 {error && (
                     <div className="bg-red-200 text-red-600 px-2 py-2 rounded-md">
                         {JSON.parse(error).info}

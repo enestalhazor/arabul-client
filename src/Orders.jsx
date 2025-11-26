@@ -18,7 +18,7 @@ function Orders(props) {
 
     useEffect(() => {
         if (token) {
-            fetch("http://localhost:8080/api/order", {
+            fetch(`${backendBaseUrl}/api/order`, {
                 headers: {
                     "Authorization": "Bearer " + token
                 },
@@ -40,7 +40,7 @@ function Orders(props) {
     }, [token])
 
     return (
-        <div className="min-h-screen bg-gray-900 text-white p-6 flex flex-col items-center gap-6">
+        <div className="min-h-screen bg-gray-700 text-white p-6 flex flex-col items-center gap-6">
             <h1 className='text-2xl'>My orders</h1>
             {orders.length === 0 ? (
                 <p className="text-gray-400 text-lg">You have no orders yet.</p>

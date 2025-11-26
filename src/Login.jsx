@@ -23,7 +23,7 @@ function Login(props) {
     const {setToken, setProfile } = useContext(AppContext)
 
     function handleSubmit() {
-        const promise = fetch("http://localhost:8080/api/users/login", {
+        const promise = fetch(`${backendBaseUrl}/api/users/login`, {
             method: "POST",
             body: JSON.stringify({ email: email, password: password }),
             headers: { "Content-Type": "application/json" }
@@ -38,7 +38,7 @@ function Login(props) {
                     const decodedToken = jwtDecode(token)
                     const id = decodedToken.id
 
-                    const promise2 = fetch("http://localhost:8080/api/users/" + id, {
+                    const promise2 = fetch(`${backendBaseUrl}/api/users/` + id, {
                         headers: { "Authorization": "Bearer " + a.token }
                     })
 
@@ -64,7 +64,7 @@ function Login(props) {
 
     return (
         <>
-            <div className="flex min-h-screen items-center justify-center bg-gradient-to-b bg-gray-950 p-6">
+            <div className="flex min-h-screen items-center justify-center bg-gradient-to-b bg-gray-700 p-6">
                 <div className="w-full max-w-md">
                     <Card className="bg-black backdrop-blur-xl border border-gray-800 w-full flex flex-col p-8 rounded-2xl shadow-2xl">
                         <CardHeader className="text-center space-y-2">
