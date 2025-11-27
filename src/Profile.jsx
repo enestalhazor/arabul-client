@@ -6,8 +6,9 @@ import { Input } from "./components/ui/input"
 import { Label } from "./components/ui/label"
 import { useNavigate } from "react-router-dom"
 import { AppContext, useContext } from "./AppContext"
+import { backendBaseUrl } from './env';
 
-function Profile(props) {
+function Profile() {
 
     const { profile, token, setProfile } = useContext(AppContext)
     

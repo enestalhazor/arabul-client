@@ -5,14 +5,13 @@ import {
 import { Button } from './components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { AppContext, useContext } from "./AppContext"
+import { backendBaseUrl } from './env';
 
 function Cart() {
 
     const { token } = useContext(AppContext)
-    
     const [cart, setCart] = useState([])
     const [error, setError] = useState("")
-
     const navigate = useNavigate()
 
     function getCart() {
@@ -63,7 +62,6 @@ function Cart() {
                 }
             })
     }
-
 
     useEffect(() => {
         getCart()

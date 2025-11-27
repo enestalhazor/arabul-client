@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from "react"
-import { Card, CardHeader, CardContent, CardFooter } from "./components/ui/card"
 import { Button } from "./components/ui/button"
 import { Input } from "./components/ui/input"
-import { Label } from "./components/ui/label"
 import { Link, useNavigate } from "react-router-dom"
 import { AppContext, useContext } from "./AppContext"
 import { HomeIcon, SearchIcon, ShoppingCart } from "lucide-react"
+import { backendBaseUrl } from './env';
 
-function Header(props) {
+function Header() {
 
     const { token, profile, logOut, cartCount, setError, error, setCartCount } = useContext(AppContext)
     const navigate = useNavigate()
     const [isOpen, setOpen] = useState(false)
     const [term, setTerm] = useState("")
-
 
     useEffect(() => {
         if (token) {

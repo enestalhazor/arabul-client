@@ -10,10 +10,9 @@ import {
 import { ShoppingCart } from 'lucide-react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { AppContext } from './AppContext';
+import { backendBaseUrl } from './env';
 
-
-
-function SearchedProducts(props) {
+function SearchedProducts() {
 
     const { updateCart, searchedProducts, setSearchedProducts, error, setError } = useContext(AppContext)
     const navigate = useNavigate()

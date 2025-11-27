@@ -8,9 +8,9 @@ import {
 } from "./components/ui/card"
 import { useNavigate } from 'react-router-dom';
 import { AppContext, useContext } from './AppContext';
+import { backendBaseUrl } from './env';
 
-
-function Orders(props) {
+function Orders() {
 
     const { token, profile } = useContext(AppContext)
     const [orders, setOrders] = useState([]);

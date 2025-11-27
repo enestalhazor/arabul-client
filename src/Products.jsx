@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { Button } from "./components/ui/button"
+import React, { useContext, useState } from 'react';
 import {
     Card,
     CardContent,
@@ -10,10 +9,11 @@ import {
 } from "./components/ui/card"
 import { ShoppingCart } from 'lucide-react'
 import { useNavigate } from 'react-router-dom';
-import SearchedProducts from './SearchedProducts';
+import { AppContext } from './AppContext';
 
-function Products(props) {
-    const { setSearchedProductsPage, setSearchedProducts, searchedProducts, searchedProductsPage, products, updateCart } = props
+function Products() {
+
+    const { products, updateCart } = useContext(AppContext)
 
     const navigate = useNavigate()
 

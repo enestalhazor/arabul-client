@@ -12,14 +12,14 @@ import { Input } from "./components/ui/input"
 import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
 import { AppContext, useContext } from "./AppContext"
+import { backendBaseUrl } from './env';
 
 
 function Login(props) {
     const navigate = useNavigate()
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("")
-    const [error, setError] = useState("")
-
+    const [error, setError] = useState("")    
     const {setToken, setProfile } = useContext(AppContext)
 
     function handleSubmit() {

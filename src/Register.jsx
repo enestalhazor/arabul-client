@@ -10,8 +10,9 @@ import {
 } from "./components/ui/card"
 import { Input } from "./components/ui/input"
 import { useNavigate } from 'react-router-dom';
+import { backendBaseUrl } from './env';
 
-function Register(props) {
+function Register() {
 
     const navigate = useNavigate()
     const inputFileRef = useRef(null)

@@ -16,11 +16,9 @@ import {
   Routes,
   Route,
   useNavigate,
-  Navigate,
 } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import { backendBaseUrl } from './env';
-
 
 export const Arabul = () => {
 
@@ -30,7 +28,26 @@ export const Arabul = () => {
   const [cartCount, setCartCount] = useState(0)
   const [error, setError] = useState("")
   const [searchedProducts, setSearchedProducts] = useState([]);
+  const [products, setProducts] = useState([])
   const [searchedProductsPage, setSearchedProductsPage] = useState(false);
+
+  const fetchProducts = () => {
+    fetch(`${backendBaseUrl}/api/products`)
+      .then(res => {
+        if (res.status === 200) {
+          setError("")
+          return res.json().then(data => {
+            setProducts(data)
+          })
+        }
+        else {
+          res.text().then((text) => {
+            setError(text)
+            console.log(error)
+          })
+        }
+      })
+  }
 
   function updateCart(productId) {
 
@@ -123,6 +140,8 @@ export const Arabul = () => {
     error,
     setSearchedProducts,
     searchedProducts,
+    fetchProducts,
+    products,
     updateCart,
     logOut,
     navigate

@@ -8,10 +8,9 @@ import { AppContext, useContext } from "./AppContext"
 import { backendBaseUrl } from "./env"
 
 
-function Checkout(props) {
+function Checkout() {
 
     const { token, setCartCount } = useContext(AppContext)
-
     const [CreditCardNumber, setCreditCardNumber] = useState("")
     const [VerificationCode, setVerificationCode] = useState("")
     const [ExpirationDate, setExpirationDate] = useState("")
@@ -42,7 +41,6 @@ function Checkout(props) {
                     firstName: FirstName,
                     lastName: LastName
                 }).toString();
-
 
                 const promise = fetch(`${backendBaseUrl}/api/order?${queryParams}`, {
                     method: "POST",

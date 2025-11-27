@@ -1,37 +1,11 @@
-import { Button } from "./components/ui/button"
-import { Input } from "./components/ui/input"
 import Products from './Products'
 import { useState, useEffect } from 'react'
-import { SearchIcon, ShoppingCart } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
 import { AppContext, useContext } from "./AppContext"
 import { backendBaseUrl } from "./env"
 
 function HomePage() {
 
-    const { token, setCartCount, setError, error, updateCart, setSearchedProducts, searchedProducts, searchedProductsPage, setSearchedProductsPage } = useContext(AppContext)
-
-    const [products, setProducts] = useState([])
-    const [selectedProduct, setSelectedProduct] = useState(null);
-    const [selectedProductPage, setSelectedProductPage] = useState(false);
-
-    const fetchProducts = () => {
-        fetch(`${backendBaseUrl}/api/products`)
-            .then(res => {
-                if (res.status === 200) {
-                    setError("")
-                    return res.json().then(data => {
-                        setProducts(data)
-                    })
-                }
-                else {
-                    res.text().then((text) => {
-                        setError(text)
-                        console.log(error)
-                    })
-                }
-            })
-    }
+    const { error, fetchProducts } = useContext(AppContext)
 
     useEffect(() => {
         fetchProducts()
@@ -46,7 +20,7 @@ function HomePage() {
                     </div>
                 )}
                 <div className="mt-10">
-                    <Products className="bg-black" setSearchedProductsPage={setSearchedProductsPage} setSearchedProducts={setSearchedProducts} searchedProducts={searchedProducts} searchedProductsPage={searchedProductsPage} setSelectedProductPage={setSelectedProductPage} setSelectedProduct={setSelectedProduct} selectedProductPage={selectedProductPage} selectedProduct={selectedProduct} products={products} updateCart={updateCart} />
+                    <Products className="bg-black"/>
                 </div>
             </div>
 
