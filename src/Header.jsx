@@ -77,12 +77,42 @@ function Header() {
 
                 {isOpen && (
                     <div className="absolute top-12 right-0 bg-gray-900 rounded-lg shadow-xl py-2 w-36 border z-50">
-                        <div className="px-4 py-2 hover:bg-gray-700 cursor-pointer" onClick={() => navigate('/login')}>Login</div>
-                        <div className="px-4 py-2 hover:bg-gray-700 cursor-pointer" onClick={() => navigate('/register')}>Register</div>
-                        {token && (
+                        {token ? (
                             <>
-                                <div className="px-4 py-2 hover:bg-gray-700 cursor-pointer" onClick={() => navigate('/profile')}>Profile</div>
-                                <div className="px-4 py-2 hover:bg-gray-700 cursor-pointer" onClick={logOut}>Logout</div>
+                                <div
+                                    className="px-4 py-2 hover:bg-gray-700 cursor-pointer"
+                                    onClick={() => navigate("/orders")}
+                                >
+                                    My Orders
+                                </div>
+                                <div
+                                    className="px-4 py-2 hover:bg-gray-700 cursor-pointer"
+                                    onClick={() => navigate("/profile")}
+                                >
+                                    Profile
+                                </div>
+                                <div
+                                    className="px-4 py-2 hover:bg-gray-700 cursor-pointer"
+                                    onClick={logOut}
+                                >
+                                    Logout
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                                <div
+                                    className="px-4 py-2 hover:bg-gray-700 cursor-pointer"
+                                    onClick={() => navigate("/register")}
+                                >
+                                    Register
+                                </div>
+
+                                <div
+                                    className="px-4 py-2 hover:bg-gray-700 cursor-pointer"
+                                    onClick={() => navigate("/login")}
+                                >
+                                    Login
+                                </div>
                             </>
                         )}
                     </div>
