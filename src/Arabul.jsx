@@ -68,7 +68,7 @@ export const Arabul = () => {
         if (res.ok) {
           setError("");
 
-          fetch("http://localhost:8080/api/cart", {
+          fetch(`${backendBaseUrl}/api/cart`, {
             headers: {
               "Content-Type": "application/json",
               "Authorization": "Bearer " + token

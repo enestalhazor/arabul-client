@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { AppContext, useContext } from './AppContext';
-import { backendBaseUrl } from './env';
+import { backendBaseUrl, backendStaticBaseUrl } from './env';
 import { ShoppingCart } from 'lucide-react';
 
 function Product() {
@@ -44,7 +44,7 @@ function Product() {
                 <div className="flex flex-col md:flex-row items-center bg-gradient-to-br bg-black text-white rounded-2xl shadow-xl max-w-2xl w-full overflow-hidden border border-gray-800">
                     <div className="md:w-1/2 w-full flex justify-center p-6 bg-black">
                         <img
-                            src={`http://localhost:8090/${product.photo}`}
+                            src={`${backendStaticBaseUrl}/${product.photo}`}
                             alt={product.name}
                             className="rounded-lg w-36 h-36 object-cover shadow-lg transition-transform duration-300 hover:scale-105"
                         />

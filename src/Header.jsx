@@ -4,7 +4,7 @@ import { Input } from "./components/ui/input"
 import { Link, useNavigate } from "react-router-dom"
 import { AppContext, useContext } from "./AppContext"
 import { HomeIcon, SearchIcon, ShoppingCart } from "lucide-react"
-import { backendBaseUrl } from './env';
+import { backendBaseUrl, backendStaticBaseUrl } from './env';
 
 function Header() {
 
@@ -68,7 +68,7 @@ function Header() {
             </div>
             <div className="relative text-center flex flex-col items-center">
                 <img
-                    src={`http://localhost:8090/${profile?.profile_picture ?? "default.jpg"}`}
+                    src={`${backendStaticBaseUrl}/${profile?.profile_picture ?? "default.jpg"}`}
                     alt="Profile"
                     className="border w-10 h-10 rounded-full cursor-pointer"
                     onClick={() => setOpen(!isOpen)}

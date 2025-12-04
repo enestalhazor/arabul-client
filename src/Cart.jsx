@@ -5,7 +5,7 @@ import {
 import { Button } from './components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { AppContext, useContext } from "./AppContext"
-import { backendBaseUrl } from './env';
+import { backendBaseUrl, backendStaticBaseUrl } from './env';
 
 function Cart() {
 
@@ -87,7 +87,7 @@ function Cart() {
                             >
                                 <div className="flex-shrink-0">
                                     <img
-                                        src={`http://localhost:8090/${content.photo}`}
+                                        src={`${backendStaticBaseUrl}/${content.photo}`}
                                         alt={content.name}
                                         className="w-24 h-24 object-cover rounded-md border border-gray-700"
                                     />

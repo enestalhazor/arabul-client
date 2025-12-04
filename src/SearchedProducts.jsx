@@ -10,7 +10,7 @@ import {
 import { ShoppingCart } from 'lucide-react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { AppContext } from './AppContext';
-import { backendBaseUrl } from './env';
+import { backendBaseUrl, backendStaticBaseUrl } from './env';
 
 function SearchedProducts() {
 
@@ -28,6 +28,7 @@ function SearchedProducts() {
                     })
                 }
                 else {
+                    setSearchedProducts([])
                     res.text().then((text) => {
                         setError(text)
                         console.log(error)
@@ -53,7 +54,7 @@ function SearchedProducts() {
                             <CardContent className="px-3 pb-3 pt-1">
                                 <img
                                     onClick={() => { navigate("/product/" + product.id) }}
-                                    src={`http://localhost:8090/${product.photo}`}
+                                    src={`${backendStaticBaseUrl}/${product.photo}`}
                                     alt={product.name}
                                     className="w-30 h-30 object-cover rounded-lg mb-2"
                                 />

@@ -8,7 +8,7 @@ import {
 } from "./components/ui/card"
 import { useNavigate } from 'react-router-dom';
 import { AppContext, useContext } from './AppContext';
-import { backendBaseUrl } from './env';
+import { backendBaseUrl, backendStaticBaseUrl } from './env';
 
 function Orders() {
 
@@ -74,7 +74,7 @@ function Orders() {
                                 {order.products.map(product => (
                                     <div onClick={() => {navigate("/product/" + product.product_id)}} key={product.product_id} className="flex gap-4 items-center bg-gray-900 p-2 rounded-lg border border-gray-700 hover:bg-gray-800 transition">
                                         <img
-                                            src={`http://localhost:8090/${product.photo}`}
+                                            src={`${backendStaticBaseUrl}/${product.photo}`}
                                             alt={product.name}
                                             className="w-20 h-20 object-cover rounded-md border border-gray-600"
                                         />

@@ -6,7 +6,7 @@ import { Input } from "./components/ui/input"
 import { Label } from "./components/ui/label"
 import { useNavigate } from "react-router-dom"
 import { AppContext, useContext } from "./AppContext"
-import { backendBaseUrl } from './env';
+import { backendBaseUrl, backendStaticBaseUrl } from './env';
 
 function Profile() {
 
@@ -72,7 +72,7 @@ function Profile() {
                 <Card className="w-full max-w-md shadow-lg rounded-2xl bg-black">
                     <CardHeader className="flex flex-col items-center gap-4 pt-6">
                         <Avatar className="w-20 h-20 border border-primary/20">
-                            <AvatarImage src={`http://localhost:8090/${profile.profile_picture}`} />
+                            <AvatarImage src={`${backendStaticBaseUrl}/${profile.profile_picture}`} />
                         </Avatar>
                         <h3>{profile.name}</h3>
                         <div className="w-full space-y-4">

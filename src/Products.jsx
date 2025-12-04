@@ -10,6 +10,7 @@ import {
 import { ShoppingCart } from 'lucide-react'
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from './AppContext';
+import { backendStaticBaseUrl } from './env';
 
 function Products() {
 
@@ -38,7 +39,7 @@ function Products() {
                         <CardContent className="px-3 pb-3 pt-1">
                             <img
                                 onClick={() => { navigate("/product/" + product.id) }}
-                                src={`http://localhost:8090/${product.photo}`}
+                                src={`${backendStaticBaseUrl}/${product.photo}`}
                                 alt={product.name}
                                 className="w-30 h-30 object-cover rounded-lg mb-2"
                             />
