@@ -8,6 +8,7 @@ function Product() {
 
     const { updateCart, token } = useContext(AppContext)
     const [product, setProduct] = useState(null)
+    const [error, setError] = useState("")
     const { id } = useParams()
 
     useEffect(() => {
@@ -20,11 +21,13 @@ function Product() {
                 if (res.status === 200) {
                     return res.json().then(data => {
                         setProduct(data)
+                        setError("")
                     })
                 }
                 else {
                     res.text().then((text) => {
                         console.log(text)
+                        setError(text)
                     })
                 }
             })
@@ -41,6 +44,11 @@ function Product() {
     return (
         <>
             <div className="min-h-screen flex items-center justify-center bg-gray-700 px-4 py-10">
+                {error && (
+                    <div className="bg-red-200 text-red-600 px-2 py-2 rounded-md">
+                        {JSON.parse(error).info}
+                    </div>
+                )}
                 <div className="flex flex-col md:flex-row items-center bg-gradient-to-br bg-black text-white rounded-2xl shadow-xl max-w-2xl w-full overflow-hidden border border-gray-800">
                     <div className="md:w-1/2 w-full flex justify-center p-6 bg-black">
                         <img

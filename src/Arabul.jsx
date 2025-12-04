@@ -29,7 +29,6 @@ export const Arabul = () => {
   const [error, setError] = useState("")
   const [searchedProducts, setSearchedProducts] = useState([]);
   const [products, setProducts] = useState([])
-  const [searchedProductsPage, setSearchedProductsPage] = useState(false);
 
   const fetchProducts = () => {
     fetch(`${backendBaseUrl}/api/products`)

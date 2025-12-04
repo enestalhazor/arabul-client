@@ -11,13 +11,14 @@ import { backendBaseUrl, backendStaticBaseUrl } from './env';
 function Profile() {
 
     const { profile, token, setProfile } = useContext(AppContext)
-    
+
     const [isDisabled, setIsDisabled] = useState(true)
     const [name, setName] = useState(profile?.name || "")
     const [email, setEmail] = useState(profile?.email || "")
     const [password, setPassword] = useState("")
     const [phone, setPhone] = useState(profile?.phone || "")
     const [address, setAddress] = useState(profile?.address || "")
+    const [error, setError] = useState("")
     const [profilepicture, setProfilePic] = useState(profile?.profilepicture)
 
     const navigate = useNavigate()
@@ -49,8 +50,10 @@ function Profile() {
         promise.then((res) => {
             if (res.status !== 200) {
                 res.text().then((text) => {
+                    setError(text)
                 })
             }
+            setError("")
             setIsDisabled(a => !a)
             const promise2 = fetch(`${backendBaseUrl}/api/users/` + profile.id, {
                 headers: { "Authorization": "Bearer " + token }
@@ -69,6 +72,11 @@ function Profile() {
     return (
         <>
             <div className="flex flex-col items-center min-h-screen bg-gray-700 p-6">
+                {error && (
+                    <div className="bg-red-200 text-red-600 px-2 py-2 rounded-md">
+                        {JSON.parse(error).info}
+                    </div>
+                )}
                 <Card className="w-full max-w-md shadow-lg rounded-2xl bg-black">
                     <CardHeader className="flex flex-col items-center gap-4 pt-6">
                         <Avatar className="w-20 h-20 border border-primary/20">

@@ -14,6 +14,7 @@ function Orders() {
 
     const { token, profile } = useContext(AppContext)
     const [orders, setOrders] = useState([]);
+    const [error, setError] = useState("")
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -28,10 +29,12 @@ function Orders() {
                         return res.json().then(data => {
 
                             setOrders(data.slice().reverse())
+                            setError("")
                         })
                     }
                     else {
                         res.text().then((text) => {
+                            setError(text)
                             console.log(text)
                         })
                     }
@@ -41,6 +44,11 @@ function Orders() {
 
     return (
         <div className="min-h-screen bg-gray-700 text-white p-6 flex flex-col items-center gap-6">
+            {error && (
+                <div className="bg-red-200 text-red-600 px-2 py-2 rounded-md">
+                    {JSON.parse(error).info}
+                </div>
+            )}
             <h1 className='text-2xl'>My orders</h1>
             {orders.length === 0 ? (
                 <p className="text-gray-400 text-lg">You have no orders yet.</p>
@@ -66,13 +74,13 @@ function Orders() {
                                 <p className="text-gray-200 text-sm">
                                     Credit Card: **** **** **** {order.credit_card_number.slice(-4)}
                                 </p>
-                                <p className="text-gray-500 text-sm">   
+                                <p className="text-gray-500 text-sm">
                                     Shipping to {profile.address}
                                 </p>
                             </CardHeader>
                             <CardContent className="bg-c p-4 flex flex-col gap-4">
                                 {order.products.map(product => (
-                                    <div onClick={() => {navigate("/product/" + product.product_id)}} key={product.product_id} className="flex gap-4 items-center bg-gray-900 p-2 rounded-lg border border-gray-700 hover:bg-gray-800 transition">
+                                    <div onClick={() => { navigate("/product/" + product.product_id) }} key={product.product_id} className="flex gap-4 items-center bg-gray-900 p-2 rounded-lg border border-gray-700 hover:bg-gray-800 transition">
                                         <img
                                             src={`${backendStaticBaseUrl}/${product.photo}`}
                                             alt={product.name}

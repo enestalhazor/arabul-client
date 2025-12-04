@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
     Card,
     CardContent,
@@ -14,7 +14,9 @@ import { backendBaseUrl, backendStaticBaseUrl } from './env';
 
 function SearchedProducts() {
 
-    const { updateCart, searchedProducts, setSearchedProducts, error, setError } = useContext(AppContext)
+    const { updateCart, searchedProducts, setSearchedProducts } = useContext(AppContext)
+    const [error, setError] = useState("")
+
     const navigate = useNavigate()
     const { term } = useParams()
 
@@ -25,6 +27,7 @@ function SearchedProducts() {
                     setError("")
                     return res.json().then(data => {
                         setSearchedProducts(data)
+                        setError("")
                     })
                 }
                 else {
@@ -41,6 +44,11 @@ function SearchedProducts() {
     return (
         <>
             <div className="min-h-screen bg-gray-700 text-white flex flex-col items-center gap-6 pt-2 sm:pt-4">
+                {error && (
+                    <div className="bg-red-200 text-red-600 px-2 py-2 rounded-md">
+                        {JSON.parse(error).info}
+                    </div>
+                )}
                 <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 p-4">
                     {searchedProducts.map((product) => (
                         <Card

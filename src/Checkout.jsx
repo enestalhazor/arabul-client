@@ -11,6 +11,7 @@ import { backendBaseUrl } from "./env"
 function Checkout() {
 
     const { token, setCartCount } = useContext(AppContext)
+    const [error, setError] = useState("")
     const [CreditCardNumber, setCreditCardNumber] = useState("")
     const [VerificationCode, setVerificationCode] = useState("")
     const [ExpirationDate, setExpirationDate] = useState("")
@@ -25,7 +26,14 @@ function Checkout() {
         })
             .then((res) => {
                 if (res.status === 200) {
+                    setError("")
                     return res.json();
+                }
+                else {
+                    res.text().then((text) => {
+                        setError(text)
+                        console.log(error)
+                    })
                 }
             })
             .then((cartProducts) => {
@@ -57,6 +65,11 @@ function Checkout() {
                         setCartCount(0)
                         navigate("/orders")
                     }
+                    else {
+                        res.text().then((text) => {
+                            setError(text)
+                        })
+                    }
                 })
 
             })
@@ -65,6 +78,11 @@ function Checkout() {
     return (
         <>
             <div className="flex flex-col items-center justify-center min-h-screen bg-gray-700 px-4 py-10">
+                {error && (
+                    <div className="bg-red-200 text-red-600 px-2 py-2 rounded-md">
+                        {JSON.parse(error).info}
+                    </div>
+                )}
                 <Card className="w-full max-w-md bg-gray-950 text-gray-100 shadow-2xl rounded-3xl border border-gray-800">
                     <CardHeader className="space-y-4 text-center">
                         <h2 className="text-2xl font-bold text-white">Checkout</h2>

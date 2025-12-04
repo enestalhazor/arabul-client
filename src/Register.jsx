@@ -61,6 +61,11 @@ function Register() {
 
     return (
         <div className="flex min-h-screen items-center justify-center bg-gradient-to-b bg-gray-700 p-6">
+            {error && (
+                <div className="bg-red-200 text-red-600 px-2 py-2 rounded-md">
+                    {JSON.parse(error).info}
+                </div>
+            )}
             <div className="w-full max-w-md">
                 <Card className="bg-black backdrop-blur-xl border border-gray-800 w-full h-full flex flex-col p-8 rounded-2xl shadow-2xl">
                     <CardHeader className="text-center space-y-2">

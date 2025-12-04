@@ -73,6 +73,11 @@ function Cart() {
     return (
         <>
             <div className="min-h-screen bg-gray-700 text-white flex flex-col items-center justify-center">
+                {error && (
+                    <div className="bg-red-200 text-red-600 px-2 py-2 rounded-md">
+                        {JSON.parse(error).info}
+                    </div>
+                )}
                 <div className=" w-[700px] max-w-full flex flex-col gap-4 p-6 bg-gray-800 rounded-lg shadow-xl">
                     {cart.length < 1 && (
                         <div className="w-full p-6 bg-gray-700 text-center rounded-lg text-gray-300 text-lg font-medium">

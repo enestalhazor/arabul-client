@@ -8,7 +8,8 @@ import { backendBaseUrl, backendStaticBaseUrl } from './env';
 
 function Header() {
 
-    const { token, profile, logOut, cartCount, setError, error, setCartCount } = useContext(AppContext)
+    const { token, profile, logOut, cartCount, setCartCount } = useContext(AppContext)
+    const [error, setError] = useState("")
     const navigate = useNavigate()
     const [isOpen, setOpen] = useState(false)
     const [term, setTerm] = useState("")
@@ -22,8 +23,15 @@ function Header() {
                 },
             })
                 .then(res => {
-                    if (res.ok) {
+                    if (res.status === 200) {
+                        setError("")
                         return res.json()
+                    }
+                    else {
+                        res.text().then((text) => {
+                            setError(text)
+                            console.log(error)
+                        })
                     }
                 })
                 .then((data) => {
@@ -38,6 +46,11 @@ function Header() {
 
     return (
         <div className="bg-gray-700 text-white flex items-center justify-between p-3 sm:p-2 gap-1">
+            {error && (
+                <div className="bg-red-200 text-red-600 px-2 py-2 rounded-md">
+                    {JSON.parse(error).info}
+                </div>
+            )}
             <Link to="/home">
                 <HomeIcon className="w-6 h-6 sm:w-7 sm:h-7" />
             </Link>
