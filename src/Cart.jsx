@@ -9,7 +9,7 @@ import { backendBaseUrl, backendStaticBaseUrl } from './env';
 
 function Cart() {
 
-    const { token } = useContext(AppContext)
+    const { token, setCartCount, cartCount } = useContext(AppContext)
     const [cart, setCart] = useState([])
     const [error, setError] = useState("")
     const navigate = useNavigate()
@@ -51,6 +51,7 @@ function Cart() {
         })
             .then(res => {
                 if (res.status === 200) {
+                    setCartCount(prev => prev - 1);
                     setError("")
                     getCart()
                 }

@@ -147,7 +147,7 @@ export const Arabul = () => {
   }
 
   if (!isTokenCheckDone) {
-    return <div>Loading...</div>
+    return <div className='bg-gray-700'>Loading...</div>
   }
   return (
     <div>

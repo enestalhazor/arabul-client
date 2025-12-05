@@ -11,7 +11,6 @@ import { backendBaseUrl, backendStaticBaseUrl } from './env';
 function Profile() {
 
     const { profile, token, setProfile } = useContext(AppContext)
-
     const [isDisabled, setIsDisabled] = useState(true)
     const [name, setName] = useState(profile?.name || "")
     const [email, setEmail] = useState(profile?.email || "")
@@ -20,7 +19,6 @@ function Profile() {
     const [address, setAddress] = useState(profile?.address || "")
     const [error, setError] = useState("")
     const [profilepicture, setProfilePic] = useState(profile?.profilepicture)
-
     const navigate = useNavigate()
 
     function changeProfileInfos() {
