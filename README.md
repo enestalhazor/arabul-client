@@ -1,70 +1,174 @@
-# Getting Started with Create React App
+🌙 Arabul — Modern Full-Stack E-Commerce Platform
+🌑 Arabul — Modern Full-Stack Shopping Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A refined, elegant, and fully functional e-commerce platform built with React (frontend) and Spring Boot + PostgreSQL (backend).
+Designed with a premium, dark-lux UI and a clean, secure API layer.
 
-## Available Scripts
+✨ Features
+🛒 Storefront & User Features
 
-In the project directory, you can run:
+- Beautiful dark-theme product catalog
+- Product browsing, detailed pages, and search
+- Add to cart, update quantity, remove items
+- Checkout with secure payment form
+- Order history view
+- Authentication: Register · Login · Logout
+- Profile data loading after JWT decode
 
-### `npm start`
+🔐 Security & Auth
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- JWT-based authentication
+- Token stored in localStorage
+- Protected routes on both backend & frontend
+- Auto-redirect to login when token is missing
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+🗄 Backend (Spring Boot)
 
-### `npm test`
+- Products API
+- Cart API
+- Order API
+- Image file upload handling
+- PostgreSQL persistence
+- Clean Repository + Controller architecture
+- Validation + safe request handling
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+⚛️ Frontend (React)
 
-### `npm run build`
+- Global state using custom AppContext
+- Dynamic cart count synced from backend
+- Routing with React Router
+- Full checkout workflow
+- Elegant UI with ShadCN + Tailwind CSS
+- Fetch-driven API interactions
+- Error handling with user feedback
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+📂 Project Structure
+Frontend (React)
+src/
+ ├─ AppContext.js
+ ├─ Arabul.jsx
+ ├─ Cart.jsx
+ ├─ Checkout.jsx
+ ├─ Product.jsx
+ ├─ Login.jsx
+ ├─ Register.jsx
+ ├─ Orders.jsx
+ ├─ Profile.jsx
+ ├─ SearchedProducts.jsx
+ ├─ components/ui/*
+ └─ env.js
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+🚀 How It Works
+🔁 Global AppContext
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+All essential features—cart count, token, profile, product list—are stored globally:
 
-### `npm run eject`
+const data = {
+  setProfile,
+  profile,
+  token,
+  cartCount,
+  products,
+  updateCart,
+  fetchProducts,
+  logOut,
+  navigate
+}
+This lets any component access:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+User profile
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Auth token
+- Global errors
+- Search results
+- Cart total
+- Product data
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+🛒 Cart Logic
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- Adding sends a POST to /api/cart
+- Removing sends DELETE to /api/cart/{id}
+- Total count always recalculated from backend
 
-## Learn More
+💳 Checkout Flow
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Load cart
+- Gather payment + customer info
+- Send product list + payment headers to /api/order
+- If successful → clear cart & redirect to /orders
+- Backend validates:
+- Card number format
+- Expiration mm/yy
+- CVV length
+- First & last name
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+📦 Products Module
 
-### Code Splitting
+- Fetch all products
+- Fetch by ID
+- Image paths resolved via backendStaticBaseUrl
+- Product photos uploaded by backend
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+⚙️ Environment Variables
 
-### Analyzing the Bundle Size
+- Inside env.js:
+- export const backendBaseUrl = "http://your-server:8080"
+- export const backendStaticBaseUrl = "http://your-server:8090"
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
+You may adjust these for local development.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+🧪 API Summary
+Products
+Method	Endpoint	Description
+GET	/api/products	Get all products
+GET	/api/products/{id}	Get product by ID
+GET	/api/products/search?term=	Search product
+POST	/api/products	Create product
+DELETE	/api/products/{id}	Delete product
 
-### Advanced Configuration
+Cart
+Method	Endpoint	Description
+GET	/api/cart	Get user cart
+POST	/api/cart	Add product
+DELETE	/api/cart/{id}	Remove product
+DELETE	/api/cart	Clear cart
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Orders
+Method	Endpoint	Description
+POST	/api/order?params	Create order
+GET	/api/order	Get user's orders
 
-### Deployment
+🛠 Tech Stack
+- Frontend
+- React 18
+- React Router
+- Tailwind CSS
+- ShadCN UI
+- JWT Decode
+- Context API
+- Backend
+- Spring Boot
+- PostgreSQL
+- JDBC Template
+- Jakarta Validation
+- REST API
+- File Upload (product photos)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+🎨 UI Style
 
-### `npm run build` fails to minify
+Arabul uses a premium, deep-contrast dark theme:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Shadowed cards
+- Rounded corners
+- Smooth transitions
+- Accent blues + grayscale palette
+- Mobile responsive layouts
+
+Ensure PostgreSQL is running and tables exist (orders, products, order_products, cart…).
+
+Run Project
+- npm run start && npm run tw-watch (for tailwind)
+
+Credits
+Designed & built as a full-stack e-commerce example combining modern frontend UX with a clean Spring Boot backend.
