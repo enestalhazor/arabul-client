@@ -8,7 +8,7 @@ import { backendBaseUrl, backendStaticBaseUrl } from './env';
 
 function Header() {
 
-    const { token, profile, logOut, cartCount, setCartCount } = useContext(AppContext)
+    const { token, profile, logOut, cartCount, setCartCount, showNotif } = useContext(AppContext)
     const [error, setError] = useState("")
     const navigate = useNavigate()
     const [isOpen, setOpen] = useState(false)
@@ -46,12 +46,20 @@ function Header() {
 
     return (
         <div className="bg-gray-700 text-white flex items-center justify-between p-3 sm:p-2 gap-1">
+            {showNotif && (
+                <div
+                    className="fixed top-4 right-4 sm:top-6 sm:right-6 bg-white/10 backdrop-blur-md text-white text-sm
+                    font-semibold px-4 py-2 rounded-xl shadow-xl border border-white/20 animate-[fadeInUp_0.3s_ease-out] z-[100]"
+                >
+                    ✓ Added to Cart
+                </div>
+            )}
             {error && (
                 <div className="bg-red-200 text-red-600 px-2 py-2 rounded-md">
                     {JSON.parse(error).info}
                 </div>
             )}
-            <Link to="/home">
+            <Link to="/">
                 <HomeIcon className="w-6 h-6 sm:w-7 sm:h-7" />
             </Link>
             <div className="flex items-center bg-black rounded-full px-3 py-2 flex-1 min-w-[150px] max-w-[600px]">

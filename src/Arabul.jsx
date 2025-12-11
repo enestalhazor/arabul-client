@@ -23,6 +23,7 @@ import { backendBaseUrl } from './env';
 export const Arabul = () => {
 
   const [token, setToken] = useState("")
+  const [showNotif, setShowNotif] = useState(false);
   const [isTokenCheckDone, setIsTokenCheckDone] = useState(false)
   const [profile, setProfile] = useState(null)
   const [cartCount, setCartCount] = useState(0)
@@ -65,6 +66,7 @@ export const Arabul = () => {
     })
       .then(res => {
         if (res.ok) {
+          triggerNotification()
           setError("");
 
           fetch(`${backendBaseUrl}/api/cart`, {
@@ -95,6 +97,12 @@ export const Arabul = () => {
         }
       })
   }
+
+  const triggerNotification = () => {
+    setShowNotif(true);
+    setTimeout(() => setShowNotif(false), 1500);
+  };
+
 
   const navigate = useNavigate()
 
@@ -131,6 +139,8 @@ export const Arabul = () => {
   const data = {
     setProfile,
     profile,
+    triggerNotification,
+    showNotif,
     setToken,
     token,
     setCartCount,
@@ -154,7 +164,7 @@ export const Arabul = () => {
       <AppContext.Provider value={data}>
         <Header />
         <Routes>
-          <Route path='/home' element={<HomePage />} ></Route>
+          <Route path='/' element={<HomePage />} ></Route>
           <Route path='/login' element={<Login />} ></Route>
           <Route path='/register' element={<Register />} ></Route>
           <Route path='/product' element={<Product />} ></Route>

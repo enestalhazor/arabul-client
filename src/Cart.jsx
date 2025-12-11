@@ -120,7 +120,7 @@ function Cart() {
                         ))}
                         <p className="text-blue-300 bg-gray-800 font-medium sticky bottom-0 right-0 w-full flex justify-end">Total = £{totalPrice.toFixed(2)}</p>
                     </div>
-                    <div className="sticky bottom-0 right-0 w-full flex justify-end mt-4">
+                    <div className="sticky bottom-0 right-0 w-full flex justify-end mt-4 gap-2">
                         <Button
                             onClick={() => navigate("/order")}
                             disabled={isEmpty}

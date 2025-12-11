@@ -14,7 +14,7 @@ import { backendStaticBaseUrl } from './env';
 
 function Products() {
 
-    const { products, updateCart } = useContext(AppContext)
+    const { products, updateCart, triggerNotification } = useContext(AppContext)
 
     const navigate = useNavigate()
 
@@ -57,7 +57,7 @@ function Products() {
                 <div className="flex items-center justify-between w-full">
                     <div className="relative inline-block">
                         <ShoppingCart
-                            onClick={() => updateCart(product.id)}
+                            onClick={() => { updateCart(product.id); }}
                             className="w-4 h-4 text-white cursor-pointer hover:text-gray-300 transition"
                         />
                         <div className="absolute -top-3 -right-3 text-blue-500 text-xs font-bold px-1.5 py-0.5 rounded-full">

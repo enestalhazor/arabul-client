@@ -46,7 +46,7 @@ function Login(props) {
                         val.json().then(function (a) {
                             console.log(a)
                             setProfile(a)
-                            navigate("/home")
+                            navigate("/")
                             setError("")
                             localStorage.setItem("token", "Bearer " + token)
                         })
