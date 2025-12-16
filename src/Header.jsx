@@ -49,7 +49,7 @@ function Header() {
             {showNotif && (
                 <div
                     className="fixed top-4 right-4 sm:top-6 sm:right-6 bg-white/10 backdrop-blur-md text-white text-sm
-                    font-semibold px-4 py-2 rounded-xl shadow-xl border border-white/20 animate-[fadeInUp_0.3s_ease-out] z-[100]"
+                    font-semibold px-4 py-2 rounded-xl shadow-xl border border-white/20 z-[100]"
                 >
                     ✓ Added to Cart
                 </div>

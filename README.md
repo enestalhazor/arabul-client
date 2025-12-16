@@ -1,75 +1,151 @@
-# Arabul --- Full-Stack Shopping Application
 
-A refined, elegant, fully functional e-commerce platform built with
-**React** (frontend) and **Spring Boot + PostgreSQL** (backend).
-Designed with a premium dark-lux UI and a clean, secure API layer.
+# 📘 Detailed Explanations of All Frontend Components
 
-## ✨ Features
+## 🧰 Frontend Technologies Used
 
-### 🛒 Storefront & User Features
+### **React**
+Used to build dynamic UI, render components efficiently, and create a single-page application where navigation happens without page reloads.
 
--   Beautiful dark-theme product catalog
--   Product browsing, detailed pages, and search
--   Add to cart, update quantity, remove items
--   Checkout with secure payment form
--   Order history view
--   Authentication: Register · Login · Logout
--   Profile data loading after JWT decode
+### **React Router**
+Allows instant navigation between pages such as `/cart`, `/orders`, `/product/:id` while maintaining app state.
 
-## 🔐 Security & Auth
+### **Context API**
+Used for global state management:
+- user authentication
+- profile data
+- product list
+- cart count
+- UI notifications
 
--   JWT-based authentication
--   Token stored in localStorage
--   Protected routes on both backend & frontend
--   Auto-redirect to login when token is missing
+### **TailwindCSS**
+Provides fast styling without writing CSS files manually.  
+Allows consistent theme (dark mode, gray-scale backgrounds, blue accents).
 
-## ⚛️ Frontend (React)
+### **ShadCN UI**
+Provides prebuilt Card, Button, Input components for quicker development and consistent design.
 
--   Global state using custom AppContext
--   Dynamic cart count synced from backend
--   Routing with React Router
--   Full checkout workflow
--   Elegant UI with ShadCN + Tailwind CSS
--   Fetch-driven API interactions
--   Error handling with user feedback
+### **serve**
+Needed in the Dockerfile to host the production build easily.
 
-## 📂 Project Structure
+---
 
-### Frontend (React)
+## 🖥 JavaScript Version Used
 
-    src/
-     ├─ AppContext.js
-     ├─ Arabul.jsx
-     ├─ Cart.jsx
-     ├─ Checkout.jsx
-     ├─ Product.jsx
-     ├─ Login.jsx
-     ├─ Register.jsx
-     ├─ Orders.jsx
-     ├─ Profile.jsx
-     ├─ SearchedProducts.jsx
-     ├─ components/ui/*
-     └─ env.js
+The frontend uses **ES2020+ JavaScript**, including:
 
-## 🚀 How It Works
+- Arrow functions  
+- Optional chaining  
+- Array methods (map, filter, reduce)  
+- React Hooks (useState, useEffect, useContext)  
+- Template literals  
+- Modules (import/export)  
 
-### 🔁 Global AppContext
+---
 
-All essential features---cart count, token, profile, product list---are
-stored globally.
+## 🧠 1. AppContext.js — Global Application State
 
-**User profile:** - Auth token - Global errors - Search results - Cart
-total - Product data
+This file creates a shared React Context so components can access global app data without prop drilling.
 
-## 🛒 Cart Logic
+### Provides Global Values:
+- **token** – The user’s JWT token  
+- **profile** – User account information  
+- **cartCount** – Total items in cart  
+- **products** – All product data  
+- **searchedProducts** – Search results  
+- **showNotif** – Add-to-cart notification state  
+- **error** – API errors
 
--   Adding → POST /api/cart
--   Removing → DELETE /api/cart/{id}
--   Total count always recalculated from backend
+### Provides Global Functions:
+- `updateCart()` – Add product to cart  
+- `fetchProducts()` – Load all products  
+- `logOut()` – Clear session  
+- `navigate()` – Router helper  
 
-## 💳 Checkout Flow
+➡️ Serves as **application brain**, connecting all components.
 
-1.  Load cart
-2.  Gather payment + customer info
-3.  Send product list + payment headers → /api/order
-4.  If successful → clear cart & redirect to /orders
+---
+
+## 🏛 2. Arabul.jsx — Main Application Controller & Router
+
+Handles:
+
+- Loading token from localStorage  
+- Decoding JWT and fetching user profile  
+- Initializing global context  
+- Displaying routes  
+- Handling notifications  
+- Managing login state  
+
+### Routes it manages:
+| Path | Component |
+|------|-----------|
+| `/` | HomePage |
+| `/login` | Login |
+| `/register` | Register |
+| `/product/:id` | Product |
+| `/cart` | Cart |
+| `/order` | Checkout |
+| `/orders` | Orders |
+| `/profile` | Profile |
+| `/product/searched/:term` | SearchedProducts |
+
+➡️ This is the **core app logic + navigation system**.
+
+---
+
+## 🛒 3. Cart.jsx — Manages User Cart
+
+Features:
+
+- Fetches cart items  
+- Calculates total price  
+- Allows removing items  
+- Redirects to login if token missing  
+- Displays list dynamically  
+
+➡️ Full shopping-cart management UI.
+
+---
+
+## 💳 4. Checkout.jsx — Payment Submission
+
+Steps:
+
+1. Fetch cart from backend  
+2. Validate credit card & customer info  
+3. Send POST request to `/api/order`  
+4. Clear cart afterwards  
+5. Navigate to `/orders`
+
+➡️ Handles complete order submission workflow.
+
+---
+
+## 🔗 5. env.js — Backend Configuration
+
+Contains:
+
+```
+backendBaseUrl = "http://your-backend:8080"
+backendStaticBaseUrl = "http://your-backend:8090"
+```
+
+➡️ Central place to change backend URLs without editing every component.
+
+---
+
+# 🧱 Dockerfile Summary
+
+```
+FROM node
+RUN npm install -g serve
+COPY ./build /home/build
+CMD ["serve", "-p", "80", "-s", "/home/build"]
+```
+
+### What It Does:
+
+1. Uses **Node** as base image.  
+2. Installs `serve`, a small static file server.  
+3. Copies React production build into `/home/build`.  
+4. Hosts the app on **port 80** using `serve`
