@@ -1,7 +1,7 @@
 
-# 📘 Detailed Explanations of All Frontend Components
+# Detailed Explanations of All Frontend Components
 
-## 🧰 Frontend Technologies Used
+## Frontend Technologies Used
 
 ### **React**
 Used to build dynamic UI, render components efficiently, and create a single-page application where navigation happens without page reloads.
@@ -29,7 +29,7 @@ Needed in the Dockerfile to host the production build easily.
 
 ---
 
-## 🖥 JavaScript Version Used
+## JavaScript Version Used
 
 The frontend uses **ES2020+ JavaScript**, including:
 
@@ -42,7 +42,7 @@ The frontend uses **ES2020+ JavaScript**, including:
 
 ---
 
-## 🧠 1. AppContext.js — Global Application State
+## 1. AppContext.js — Global Application State
 
 This file creates a shared React Context so components can access global app data without prop drilling.
 
@@ -61,11 +61,11 @@ This file creates a shared React Context so components can access global app dat
 - `logOut()` – Clear session  
 - `navigate()` – Router helper  
 
-➡️ Serves as **application brain**, connecting all components.
+Serves as **application brain**, connecting all components.
 
 ---
 
-## 🏛 2. Arabul.jsx — Main Application Controller & Router
+## 2. Arabul.jsx — Main Application Controller & Router
 
 Handles:
 
@@ -89,11 +89,11 @@ Handles:
 | `/profile` | Profile |
 | `/product/searched/:term` | SearchedProducts |
 
-➡️ This is the **core app logic + navigation system**.
+This is the **core app logic + navigation system**.
 
 ---
 
-## 🛒 3. Cart.jsx — Manages User Cart
+## 3. Cart.jsx — Manages User Cart
 
 Features:
 
@@ -103,11 +103,11 @@ Features:
 - Redirects to login if token missing  
 - Displays list dynamically  
 
-➡️ Full shopping-cart management UI.
+Full shopping-cart management UI.
 
 ---
 
-## 💳 4. Checkout.jsx — Payment Submission
+## 4. Checkout.jsx — Payment Submission
 
 Steps:
 
@@ -117,11 +117,11 @@ Steps:
 4. Clear cart afterwards  
 5. Navigate to `/orders`
 
-➡️ Handles complete order submission workflow.
+Handles complete order submission workflow.
 
 ---
 
-## 🔗 5. env.js — Backend Configuration
+## 5. env.js — Backend Configuration
 
 Contains:
 
@@ -130,11 +130,11 @@ backendBaseUrl = "http://your-backend:8080"
 backendStaticBaseUrl = "http://your-backend:8090"
 ```
 
-➡️ Central place to change backend URLs without editing every component.
+Central place to change backend URLs without editing every component.
 
 ---
 
-# 🧱 Dockerfile Summary
+# Dockerfile Summary
 
 ```
 FROM node
